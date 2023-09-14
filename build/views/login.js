@@ -35,7 +35,7 @@ function getView(){
 
                     </div>
                     <div class="card-footer p-4">
-                        <small class="negrita">por Alexis Burgos(+502-57255092) v03.22</small>
+                        <small class="negrita">por Alexis Burgos(+502-57255092) v09.2023r1</small>
                     </div>
                 </div>
             `
