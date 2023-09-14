@@ -148,4 +148,78 @@ function getFormatoReceta(sucursal,fecha,paciente,data,obs){
 
     return view;
     
-}
+};
+
+
+function receta_imprimir(sucursal,idreceta,tipo){
+  
+    $('#modalHistorialRecetas').modal('hide');
+
+    if(tipo=='DESKTOP'){
+        receta_desktop(sucursal,idreceta);
+    }else{
+        receta_web();
+    }
+   
+  
+     
+};
+
+
+function receta_web(sucursal,idreceta){
+    rootImpresion.innerHTML = ''; //
+    let str = '';
+    let fecha = ''; let paciente = ''; let obs = '';
+
+    get_data_receta(sucursal,idreceta)
+    .then((data)=>{
+        //console.log(data);
+        data.map((r)=>{
+            fecha = funciones.convertDate(r.FECHA);
+            paciente = r.NOMCLIE;
+            obs = r.OBS;
+            str += `
+                <li class="negrita"> ${r.MEDICAMENTO} - ${r.DOSIS} - ${r.DURACION}</li>
+            `
+        })
+
+        rootImpresion.innerHTML = getFormatoReceta(GlobalCodSucursal,fecha,paciente,str,obs);
+            
+            setTimeout(()=>{window.print();},2000)
+
+            setTimeout(()=>{rootImpresion.innerHTML = '';console.log('timer...');},9000)
+             
+    })
+    .catch(()=>{
+        funciones.AvisoError('No se pudo generar la impresión');
+    })
+
+};
+
+
+function receta_desktop(sucursal,idreceta){
+
+    funciones.Aviso('Solicitando impresión....')
+    
+    let urldesktop = 'http://localhost:8080';
+
+    return new Promise((resolve,reject)=>{
+        axios.get(urldesktop + '/receta',{params:{
+            sucursal:sucursal,
+            correlativo:idreceta
+        }})
+        .then((response) => {
+             let data = response.data
+             if(data=='recibido'){
+                
+                resolve();
+             }else{
+                reject();
+             }             
+        }, (error) => {
+            reject(error);
+        });
+    });
+
+
+};

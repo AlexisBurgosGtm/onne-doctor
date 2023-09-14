@@ -915,7 +915,7 @@ function addListeners(){
                     }
 
                     if(imprimeReceta=='SI'){
-                        receta_imprimir(GlobalCorrelativo);
+                        receta_imprimir(GlobalCodSucursal,GlobalCorrelativo,'DESKTOP');
                     }
                     
 
@@ -1531,7 +1531,7 @@ function getTblHistorial(idcliente,nomclie,telefono){
                             </button>
                         </div>
                         <div class="col-4"> 
-                            <button class="btn btn-info btn-sm hand shadow" onclick="receta_imprimir('${r.TOKEN}','${r.IDRECETA}')">
+                            <button class="btn btn-info btn-sm hand shadow" onclick="receta_imprimir('${r.TOKEN}','${r.IDRECETA}','DESKTOP')">
                                 <i class="fal fa-print"></i>Imprimir
                             </button>
                         </div>
@@ -1715,7 +1715,7 @@ function receta_whatsapp(sucursal,idreceta,telefono){
 
 };
 
-function receta_imprimir(sucursal,idreceta){
+function BACKUP_receta_imprimir(sucursal,idreceta){
   
     $('#modalHistorialRecetas').modal('hide');
 

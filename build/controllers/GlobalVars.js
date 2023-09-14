@@ -47,3 +47,6 @@ let GlobalRecetaTelefono = '';
 let GlobalRecetaFooter = '';
 let GlobalRecetaLogo = '';
 let GlobalConfPa = '';
+
+
+
