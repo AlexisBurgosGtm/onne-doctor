@@ -53,7 +53,56 @@ let funciones = {
         //api.digitadorDetallePedidoWhatsapp(fecha,coddoc,correlativo,stn);
     })
     },
-    enviarRecetaWhatsapp2: function(sucursal,idreceta,telefono){
+    enviarRecetaWhatsapp2: function(nomclie,telefono,idreceta){
+      swal({
+        text: 'Escriba el número a donde se enviará:',
+        content: {
+          element: "input",
+          attributes: {
+            placeholder: "Número de whatsapp",
+            type: "text",
+            value: telefono
+          },
+          button: {
+            text: "Whatsapp",
+            closeModal: true,
+          },
+        }
+      })
+      .then(numero => {
+          let tel = numero || telefono;
+          let destino = '502' + tel.toString();
+          let strmensaje = '';
+          let msg = '';
+         
+          let footer = '';
+  
+          console.log('antes de la llamada')
+
+          axios.post('/select_receta_id',{sucursal:GlobalCodSucursal,id:idreceta})
+          .then((response) => {
+              let json = response.data;
+              let recetadoc;
+              json.map((r)=>{
+                recetadoc = JSON.parse(r.RECETA);
+              })
+              recetadoc.map((r)=>{
+                strmensaje += `* ${r.DESPROD} - ${r.DOSIS} - ${r.DURACION}` + "\n" + '--------------' + "\n";
+                    footer = 'NO CAMBIAR LA RECETA SIN AUTORIZACIÓN DE SU MÉDICO' + "\n";
+              })
+              msg = GlobalEncabezadoReceta + strmensaje + footer;
+              msg = encodeURIComponent(msg);
+              window.open('https://api.whatsapp.com/send?phone='+destino+'&text='+msg);
+      
+          }, (error) => {
+            funciones.AvisoError('No se pudo enviar')           
+          });
+
+         
+          //api.digitadorDetallePedidoWhatsapp(fecha,coddoc,correlativo,stn);
+      })
+    },
+    BACKUP_enviarRecetaWhatsapp2: function(sucursal,idreceta,telefono,receta){
       swal({
         text: 'Escriba el número a donde se enviará:',
         content: {
@@ -77,26 +126,19 @@ let funciones = {
          
           let footer = '';
   
-          get_data_receta(sucursal,idreceta)
-          .then((data)=>{
-            
-              data.map((r)=>{
-                strmensaje += `* ${r.MEDICAMENTO} - ${r.DOSIS} - ${r.DURACION}` + "\n" + '--------------' + "\n";
-                footer = r.OBS + "\n" + 'NO CAMBIAR LA RECETA SIN AUTORIZACIÓN DE SU MÉDICO' + "\n";
-              })   
-      
-              msg = GlobalRecetaEmpresa + GlobalRecetaDireccion + strmensaje + footer + GlobalRecetaTelefono;
-              msg = encodeURIComponent(msg);
-              window.open('https://api.whatsapp.com/send?phone='+destino+'&text='+msg);
+          let recetadoc = JSON.parse(receta);
+          recetadoc.map((r)=>{
+            strmensaje += `* ${r.DESPROD} - ${r.DOSIS} - ${r.DURACION}` + "\n" + '--------------' + "\n";
+                footer = 'NO CAMBIAR LA RECETA SIN AUTORIZACIÓN DE SU MÉDICO' + "\n";
           })
-          .catch((error)=>{
-            console.log(error)
-            funciones.AvisoError('No se enviará la receta...')
-          })
+
+          msg = GlobalEncabezadoReceta + strmensaje + footer + GlobalRecetaTelefono;
+          msg = encodeURIComponent(msg);
+          window.open('https://api.whatsapp.com/send?phone='+destino+'&text='+msg);
   
           //api.digitadorDetallePedidoWhatsapp(fecha,coddoc,correlativo,stn);
       })
-      },
+    },
     enviarPedidoWhatsapp:(fecha,coddoc,correlativo)=>{
 
     var apiwha = (navigator.contacts || navigator.mozContacts);

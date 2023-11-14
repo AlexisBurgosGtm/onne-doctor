@@ -1,55 +1,24 @@
 function getView(){
     let view = {
-        menu_old:()=>{
-            return `
-            <div class="row col-12">
-                <div class="col-6 col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                    <div id="men1" class="card card-rounded shadow hand bg-success text-white" onclick="document.getElementById('tab-espera').click()">
-                        <div class="card-body">
-                            <i class="fal fa-list"></i>Espera (<label class="negrita" id="lbMenTotalEspera">-</label>)
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                    <div id="men2" class="card card-rounded shadow hand bg-danger text-white" onclick="document.getElementById('tab-preconsultas').click()">
-                        <div class="card-body">
-                            <i class="fal fa-comments"></i>PlanDx (<label class="negrita" id="lbMenTotalDx">-</label>)
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                    <div id="men3" class="card card-rounded shadow hand bg-info text-white" onclick="document.getElementById('tab-pacientes').click()">
-                        <div class="card-body">
-                            <i class="fal fa-edit"></i>Pacientes
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                    <div id="men4" class="card card-rounded shadow hand bg-warning text-white" onclick="document.getElementById('tab-reportes').click()">
-                        <div class="card-body">
-                            <i class="fal fa-chart-pie"></i>Reportes</a>
-                        </div>
-                    </div>
-                </div>
-            </div>  
-            `
-        },
         menu:()=>{
             return `
         
-                <button class="btn btn-sm border-white text-white" onclick="document.getElementById('tab-espera').click()">
+                <button class="col-auto btn btn-sm border-white text-white" id="btnMenEspera">
                     <i class="fal fa-list"></i>    
                     <small>Espera(<label class="negrita" id="lbMenTotalEspera">-</label>)</small>
                 </button>
-                <button class="btn btn-sm border-white text-white" onclick="document.getElementById('tab-preconsultas').click()">
+                
+                <button class="col-auto btn btn-sm border-white text-white" id="btnMenPreconsultas">
                     <i class="fal fa-comments"></i>    
                     <small>PlanDx(<label class="negrita" id="lbMenTotalDx">-</label>)</small>
                 </button>
-                <button class="btn btn-sm border-white text-white" onclick="document.getElementById('tab-pacientes').click()">
+                
+                <button class="col-auto btn btn-sm border-white text-white" id="btnMenPacientes">
                     <i class="fal fa-edit"></i> 
                     <small>Pacientes</small>
                 </button>
-                <button class="btn btn-sm border-white text-white" onclick="document.getElementById('tab-reportes').click()">
+
+                <button class="col-auto btn btn-sm border-white text-white" id="btnMenReportes">
                     <i class="fal fa-chart-pie"></i><small>Reportes</small>
                 </button>
               
@@ -57,8 +26,6 @@ function getView(){
         },
         body:()=>{
             return `
-             <!-- view menu  br -->
-
                  <div class="col-12 p-0 shadow bg-white card-rounded">
 
                     <div class="tab-content" id="myTabHomeContent">
@@ -73,6 +40,9 @@ function getView(){
                         </div>
                         <div class="tab-pane fade" id="reportes" role="tabpanel" aria-labelledby="tab-reportes">
                             ${view.homeReportes()}
+                        </div>
+                        <div class="tab-pane fade" id="consultamen" role="tabpanel" aria-labelledby="tab-consulta">
+                            ${view.homeNuevaReceta()}
                         </div>
                     </div>
                     
@@ -93,6 +63,10 @@ function getView(){
                             <a class="nav-link negrita text-warning" id="tab-reportes" data-toggle="tab" href="#reportes" role="tab" aria-controls="profile" aria-selected="false">
                                 <i class="fal fa-chart-pie"></i>Reportes</a>
                         </li> 
+                        <li class="nav-item">
+                            <a class="nav-link negrita text-warning" id="tab-consultamen" data-toggle="tab" href="#consultamen" role="tab" aria-controls="profile" aria-selected="false">
+                                <i class="fal fa-chart-pie"></i>Consulta</a>
+                        </li> 
                                 
                     </ul>
 
@@ -105,15 +79,15 @@ function getView(){
         homePacientes:()=>{
             return `
             <div class="card-body bg-white shadow">
-                <h5 class="text-info negrita">Listado de Pacientes</h5>
+                <h5 class="text-especial negrita">Listado de Pacientes</h5>
                 
                 <div class="row">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4 col-xl-4">
 
                         <div class="input-group">
-                            <input type="text" class="form-control" id="txtBuscarReceta" placeholder="Escriba para Buscar...">
+                            <input type="text" class="form-control border-especial" id="txtBuscarReceta" placeholder="Escriba para Buscar...">
                             <div class="input-group-append">
-                                <button class="btn btn-info shadow" id="btnBuscarP">
+                                <button class="btn btn-especial shadow" id="btnBuscarP">
                                     <i class="fal fa-search"></i>Buscar
                                 </button>    
                             </div>
@@ -129,7 +103,7 @@ function getView(){
                 <div class="row">
                     <div class="table-responsive col-12">
                         <table class="table table-responsive table-hover" id="tblPacientes">
-                            <thead  class="bg-info text-white">
+                            <thead  class="bg-especial text-white">
                                 <tr>
                                     <td>Paciente / Teléfono / Edad</td>
                                   
@@ -169,7 +143,7 @@ function getView(){
                                         
                     <div class="table-responsive col-12">
                         <table class="table table-responsive table-hover" id="tblEspera">
-                            <thead class="bg-secondary text-white">
+                            <thead class="bg-especial text-white">
                                 <tr>
                                     <td>Paciente</td>
                                     <td>Seguro/Tipo Consulta</td>
@@ -240,13 +214,11 @@ function getView(){
             `
 
         },
-        modalNuevaReceta:()=>{
+        homeNuevaReceta:()=>{
             return `
-            <div class="modal fade" id="modalNuevaReceta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-right modal-xl" role="document">
-                    <div class="modal-content">
+                    <div class="card card-rounded fullhorizontal col-12">
                    
-                        <div class="modal-body">
+                        <div class="card-body">
                                 <h5 class="text-danger" id="lbPaciente">Consumidor Final</h5>
                                 <h5 class="text-info" id="lbEdadPaciente">-</h5>
                                 
@@ -272,15 +244,17 @@ function getView(){
                                 <div class="tab-pane fade show active" id="consulta" role="tabpanel" aria-labelledby="home-tab">
                                     ${view.formConsulta()}
                                     <div class="row">
+                                        
+                                        
                                         <div class="col-6">
-                                            <button type="button" class="btn btn-success btn-xl btn-circle hand shadow" id="btnIrReceta">
-                                                <i class="fal fa-arrow-right"></i>
+                                            <button type="button" class="btn btn-success btn-md hand shadow" id="btnIrReceta">
+                                                <i class="fal fa-list"></i> Continuar a la Receta
                                             </button>
                                         </div>
 
                                         <div class="col-6">
-                                            <button type="button" class="btn btn-danger btn-xl btn-circle hand shadow" id="btnGuardarPreconsulta">
-                                                <i class="fal fa-save"></i>
+                                            <button type="button" class="btn btn-danger btn-md hand shadow" id="btnGuardarPreconsulta">
+                                                <i class="fal fa-save"></i> Guardar Preconsulta
                                             </button>
                                         </div>
                                         
@@ -290,26 +264,27 @@ function getView(){
                                 <div class="tab-pane fade" id="receta" role="tabpanel" aria-labelledby="receta-tab">
                                     ${view.formReceta()}
 
-                                    <div class="modal-footer">
+                                        <hr class="solid">
+
                                         <div class="row">
-                                            <div class="col-4">
+                                            <div class="col-4 text-left">
                                                 <button type="button" class="btn btn-secondary btn-xl btn-circle hand shadow" id="btnCerrarModalRecetaNueva">
                                                     <i class="fal fa-angle-left"></i>
                                                 </button>
                                             </div>
                                             <div class="col-4">
-                                                <button type="button" class="btn btn-info btn-xl btn-circle hand shadow" id="btnGuardarReceta">
-                                                    <i class="fal fa-save"></i>
+                                                <button class="btn btn-especial btn-md hand shadow" id="btnGuardarReceta">
+                                                    <i class="fal fa-save"></i> Guardar Consulta/Receta
                                                 </button>
                                             </div>
                                             <div class="col-4">
-                                                <button type="button" class="btn btn-outline-info btn-xl btn-circle hand shadow" id="btnGuardarRecetaPrint">
-                                                    <i class="fal fa-print"></i>
+                                                <button type="button" class="btn btn-outline-danger btn-md hand shadow" id="btnGuardarRecetaPrint">
+                                                    <i class="fal fa-print"></i> Guardar e Imprimir
                                                 </button>
                                             </div>
                                         </div>
 
-                                    </div>
+                                    
                                 </div>
 
                                 <div class="tab-pane fade" id="historialp" role="tabpanel" aria-labelledby="historial-tab">
@@ -326,8 +301,7 @@ function getView(){
                         </div>
 
                     </div>
-                </div>
-            </div>
+                
             `
         },
         modalNuevoPaciente:()=>{
@@ -608,8 +582,8 @@ function getView(){
                     <label>Receta No.</label><label class="negrita text-danger" id="lbCorrelativo">0</label>
                 </div>                     
 
-                <div class="card shadow p-2">
-                    <label id="">Agregue un Medicamento</label>                                   
+                <div class="card card-rounded shadow p-4">
+                    <label class="negrita text-especial">Agregue un Medicamento</label>                                   
                         
                     <div class="row">
                         <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
@@ -619,23 +593,19 @@ function getView(){
                             <input type="text" class="form-control" placeholder="Dosis...Frecuencia" id="txtRecetaDosis">
                         </div>
                         <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                            <input type="text" class="form-control" placeholder="Duración..." id="txtRecetaDuracion">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Duración..." id="txtRecetaDuracion">
+                                <button class="btn btn-success btn-md shadow hand col-6" id="btnAgregarMedicamento">Agregar(+)</button>
+                            </div>
                         </div>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-2 col-md-6 col-lg-6 col-xl-6">
-                        </div>
-                        <div class="col-sm-10 col-md-6 col-lg-6 col-xl-6" align="right">
-                            <button class="btn btn-success btn-md shadow hand col-6" id="btnAgregarMedicamento">Agregar(+)</button>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="card shadow p-2">
                     <div class="table-responsive">
                         <table class="table table-bordered">
-                            <thead class="bg-secondary text-white">
+                            <thead class="bg-especial text-white">
                                 <tr>
                                     <td>Medicamento</td>
                                     <td>Dosis</td>
@@ -649,7 +619,7 @@ function getView(){
                         </table>
 
                         <div class="form-group p-4">
-                            <label>Observaciones</label>
+                            <label class="negrita text-especial">Observaciones</label>
                             <textarea class="form-control" rows="3" placeholder="Observaciones adicionales..." id="txtRecetaObs">
                             </textarea>
                         </div>
@@ -749,8 +719,10 @@ function getView(){
         }
     }
 
-    root.innerHTML = view.body() + view.modalNuevaReceta() + view.modalHistorialRecetas() + view.modalDatosConsulta() + view.modalNuevoPaciente() + view.modalEditarPaciente();
+    //root.innerHTML = view.body() + view.modalNuevaReceta() + view.modalHistorialRecetas() + view.modalDatosConsulta() + view.modalNuevoPaciente() + view.modalEditarPaciente();
+    root.innerHTML = view.body()  + view.modalHistorialRecetas() + view.modalDatosConsulta() + view.modalNuevoPaciente() + view.modalEditarPaciente();
     rootMenuFooter.innerHTML = view.menu();
+
 };
 
 function addListeners(){
@@ -759,14 +731,58 @@ function addListeners(){
     //funciones.animateCSS('men2','fadeInBottomLeft');
     //funciones.animateCSS('men3','fadeInBottomLeft');
     //funciones.animateCSS('men4','fadeInBottomLeft');
+
+    //----------------------------
+    //BOTONES DEL MENU
+
+    document.getElementById('btnMenEspera').addEventListener('click',()=>{
+        document.getElementById('tab-espera').click();
+        GlobalSelectedTab = "ESPERA";
+        funciones.animateCSS('btnMenEspera','jello');
+    });
+
+    document.getElementById('btnMenPreconsultas').addEventListener('click',()=>{
+        document.getElementById('tab-preconsultas').click();
+        GlobalSelectedTab = "PRECONSULTAS";
+        funciones.animateCSS('btnMenPreconsultas','jello');
+    });
+    document.getElementById('btnMenPacientes').addEventListener('click',()=>{
+        document.getElementById('tab-pacientes').click();
+        GlobalSelectedTab = "PACIENTES";
+        funciones.animateCSS('btnMenPacientes','jello');
+    });
+    document.getElementById('btnMenReportes').addEventListener('click',()=>{
+        document.getElementById('tab-reportes').click();
+        GlobalSelectedTab = "REPORTES";
+        funciones.animateCSS('btnMenReportes','jello');
+    });
+
+    document.getElementById('btnMenEspera').click();
+    //BOTONES DEL MENU
+    //----------------------------
  
-    
     let btnBuscarP = document.getElementById('btnBuscarP');
     btnBuscarP.addEventListener('click',()=>{
 
         getTblPacientes();
 
     });
+
+    document.getElementById('txtBuscarReceta').addEventListener('keyup',(e)=>{
+        
+        if (e.key === "Enter") {
+            // Cancel the default action, if needed
+            //e.preventDefault();
+            // Trigger the button element with a click
+            btnBuscarP.click();
+        };
+        if (e.keyCode === 13) {
+            btnBuscarP.click();
+        };
+
+    });
+
+  
 
     document.getElementById('FechaNacimiento').value = funciones.getFecha();
     let btnNuevoPaciente = document.getElementById('btnNuevoPaciente');
@@ -826,8 +842,47 @@ function addListeners(){
     });
 
     //RECETA
-    document.getElementById('btnCerrarModalRecetaNueva').addEventListener('click',()=>{$('#modalNuevaReceta').modal('hide')});
+    document.getElementById('btnCerrarModalRecetaNueva').addEventListener('click',()=>{
+        //$('#modalNuevaReceta').modal('hide')
+        document.getElementById('home-tab').click();
+    });
 
+    let btnAgregarMedicamento = document.getElementById('btnAgregarMedicamento');
+    btnAgregarMedicamento.addEventListener('click',()=>{
+        
+        let medicamento = document.getElementById('txtRecetaMedicamento').value || 'SN';
+        let dosis = document.getElementById('txtRecetaDosis').value || 'SN';
+        let duracion = document.getElementById('txtRecetaDuracion').value || 'SN';
+
+        if(medicamento == 'SN'){funciones.AvisoError('Escriba el nombre del medicamento');return;}
+        if(dosis == 'SN'){funciones.AvisoError('Escriba la dosis');return;}
+        if(duracion == 'SN'){funciones.AvisoError('Escriba la duración del tratamiento');return;}
+
+        btnAgregarMedicamento.disabled = true;
+        btnAgregarMedicamento.innerHTML = '<i class="fal fa-save fa-spin"></i>';
+
+        db_insertTempReceta(funciones.limpiarTexto(medicamento),dosis,duracion)
+        .then(()=>{
+            btnAgregarMedicamento.disabled = false;
+            btnAgregarMedicamento.innerHTML = 'Agregar(+)';
+
+            funciones.Aviso('Medicamento agregado exitosamente!!');
+            getTblTempReceta();
+
+            document.getElementById('txtRecetaMedicamento').value ='';
+            document.getElementById('txtRecetaDosis').value ='';
+            document.getElementById('txtRecetaDuracion').value ='';
+
+            document.getElementById('txtRecetaMedicamento').focus();
+        })
+        .catch(()=>{
+            funciones.AvisoError('No se pudo agregar el medicamento')
+            btnAgregarMedicamento.disabled = false;
+            btnAgregarMedicamento.innerHTML = 'Agregar(+)';
+        })
+
+    });
+    /*
     let btnAgregarMedicamento = document.getElementById('btnAgregarMedicamento');
     btnAgregarMedicamento.addEventListener('click',()=>{
         let medicamento = document.getElementById('txtRecetaMedicamento').value || 'SN';
@@ -862,14 +917,19 @@ function addListeners(){
         })
 
     });
-
+*/
     let imprimeReceta = 'NO';
     let btnGuardarReceta = document.getElementById('btnGuardarReceta');
     let btnGuardarRecetaPrint = document.getElementById('btnGuardarRecetaPrint');
     btnGuardarRecetaPrint.addEventListener('click',()=>{
+        
         imprimeReceta = 'SI';
+        
+       
         btnGuardarReceta.click();
+  
     });
+
 
     btnGuardarReceta.addEventListener('click',()=>{
         
@@ -880,6 +940,10 @@ function addListeners(){
         
                 btnGuardarReceta.disabled = true;
                 btnGuardarReceta.innerHTML = '<i class="fal fa-save fa-spin"></i>';
+
+                btnGuardarRecetaPrint.disabled = true;
+                btnGuardarRecetaPrint.innerHTML = '<i class="fal fa-save fa-spin"></i>';
+        
 
                 let obs = funciones.limpiarTexto(document.getElementById('txtRecetaObs').value) || 'SN';
 
@@ -894,47 +958,85 @@ function addListeners(){
                 let txtCIC = document.getElementById('txtCIC').value || 'SN';
                 let txtCPTX = document.getElementById('txtCPTX').value || 'SN';
 
-                insert_receta(GlobalSelectedCodPaciente,funciones.limpiarTexto(obs),GlobalCorrelativo,peso,talla,motivo,diagnostico,txtCHEA, txtCAntecedentes, txtCEF, txtCIC, txtCPTX)
-                .then(async()=>{
-                    funciones.Aviso('Receta Guardad exitosamente!!');
-
-                    btnGuardarReceta.disabled = false;
-                    btnGuardarReceta.innerHTML = '<i class="fal fa-save"></i>';
-                    $("#modalNuevaReceta").modal('hide');
-                    //regresa a la tab inicial en la consulta
-                    document.getElementById('home-tab').click();
-
-                    if(Number(GlobalSelectedIdTurno)==0){
-                    }else{
-                        delete_turno(GlobalSelectedIdTurno);
-                    };
-
-                    if(Number(GlobalSelectedIdPreconsulta)==0){
-                    }else{
-                        delete_preconsulta(GlobalSelectedIdPreconsulta);
-                    }
-
-                    if(imprimeReceta=='SI'){
-                        receta_imprimir(GlobalCodSucursal,GlobalCorrelativo,'DESKTOP');
-                    }
+                db_selectTempReceta()
+                .then((response)=>{
+                
+                    let rec = JSON.stringify(response);
+                   
+                    insert_receta(GlobalSelectedCodPaciente,funciones.limpiarTexto(obs),GlobalCorrelativo,peso,talla,motivo,diagnostico,txtCHEA, txtCAntecedentes, txtCEF, txtCIC, txtCPTX,rec)
+                    .then(async(data)=>{
+                        
+                        funciones.Aviso('Receta Guardad exitosamente!!');
+    
+                        btnGuardarReceta.disabled = false;
+                        btnGuardarReceta.innerHTML = '<i class="fal fa-save"></i> Guardar Consulta/Receta';
+                        
+                        btnGuardarRecetaPrint.disabled = false;
+                        btnGuardarRecetaPrint.innerHTML = '<i class="fal fa-print"></i> Guardar e Imprimir'
+                        
+                        
+                        //$("#modalNuevaReceta").modal('hide');
+                        
+                        //regresa a la tab inicial en la consulta
+                        document.getElementById('home-tab').click();
+    
+                        switch (GlobalSelectedTab) {
+                            case 'ESPERA':
+                                document.getElementById('btnMenEspera').click();
+                                break;
+                            case 'PRECONSULTA':
+                                document.getElementById('btnMenPreconsultas').click();
+                                break;
+                            case 'PACIENTES':
+                                document.getElementById('btnMenPacientes').click();
+                                break;
+                            case 'REPORTES':
+                                document.getElementById('btnMenReportes').click();
+                                break;
+                        }
+                      
                     
+                        if(imprimeReceta=='SI'){
+                            try {
+                                console.log('datos de regreso, id: ')
+                                console.log(data.insertId);
+                                let id = Number(data.insertId)
+            
+                                receta_imprimir(GlobalCodSucursal,id,'DESKTOP');    
+                            } catch (error) {
+                                
+                            }
+                        }
+                        
+    
+                        getCorrelativoCoddoc();
+                        imprimeReceta ='NO';
 
-                    getCorrelativoCoddoc();
-                    imprimeReceta ='NO';
-                    await delete_all_TempReceta();
+                        db_deleteTempRecetaAll();
+    
+                        GlobalSelectedIdPreconsulta = 0;
+    
+                    })
+                    .catch(()=>{
+                        btnGuardarReceta.disabled = false;
+                        btnGuardarReceta.innerHTML = '<i class="fal fa-save"></i> Guardar Consulta/Receta';
+                        
+                        btnGuardarRecetaPrint.disabled = false;
+                        btnGuardarRecetaPrint.innerHTML = '<i class="fal fa-print"></i> Guardar e Imprimir'
+                        
+                        funciones.AvisoError('No se pudo guardar la receta');
 
-                    GlobalSelectedIdPreconsulta = 0;
+                    })
 
+            
                 })
-                .catch(()=>{
-                    btnGuardarReceta.disabled = false;
-                    btnGuardarReceta.innerHTML = '<i class="fal fa-save"></i>';
-                    funciones.AvisoError('No se pudo guardar la receta')
-                })
+
+            
                
             }
         })
     });
+
 
 
     document.getElementById('btnIrReceta').addEventListener('click',()=>{document.getElementById('receta-tab').click()})
@@ -980,13 +1082,15 @@ function addListeners(){
                     funciones.Aviso('Pre-Consulta Guardada exitosamente!!');
 
                     btnGuardarPreconsulta.disabled = false;
-                    btnGuardarPreconsulta.innerHTML = '<i class="fal fa-save"></i>';
+                    btnGuardarPreconsulta.innerHTML = '<i class="fal fa-save"></i> Guardar Preconsulta';
 
-                    $("#modalNuevaReceta").modal('hide');
+                    //$("#modalNuevaReceta").modal('hide');
 
                     if(Number(GlobalSelectedIdTurno)==0){
+                        document.getElementById('tab-preconsultas').click();
                     }else{
                         delete_turno(GlobalSelectedIdTurno);
+                        document.getElementById('tab-turnos').click();
                     };
                     
                     //regresa a la tab inicial en la consulta
@@ -1000,7 +1104,7 @@ function addListeners(){
                 })
                 .catch(()=>{
                     btnGuardarPreconsulta.disabled = false;
-                    btnGuardarPreconsulta.innerHTML = '<i class="fal fa-save"></i>';
+                    btnGuardarPreconsulta.innerHTML = '<i class="fal fa-save"></i> Guardar Preconsulta';
                     funciones.AvisoError('No se pudo guardar la pre-consulta')
                 })
                
@@ -1068,8 +1172,45 @@ function addListeners(){
     });
 
     //EDICION DE PACIENTES
-    
+  
+    keyboard_listeners();
+
 };
+
+function keyboard_listeners(){
+    //Mousetrap.bind('enter', function(e) {  
+    //});
+
+    document.getElementById('txtRecetaMedicamento').addEventListener('keyup',(e)=>{
+        if (e.keyCode === 13) {
+           document.getElementById('txtRecetaDosis').focus();
+        };
+        if (e.key === 'Enter') {
+            document.getElementById('txtRecetaDosis').focus();
+        };
+    });
+
+    document.getElementById('txtRecetaDosis').addEventListener('keyup',(e)=>{
+        if (e.keyCode === 13) {
+           document.getElementById('txtRecetaDuracion').focus();
+        };
+        if (e.key === 'Enter') {
+            document.getElementById('txtRecetaDuracion').focus();
+        };
+    });
+
+    document.getElementById('txtRecetaDuracion').addEventListener('keyup',(e)=>{
+        if (e.keyCode === 13) {
+           document.getElementById('btnAgregarMedicamento').focus();
+        };
+        if (e.key === 'Enter') {
+            document.getElementById('btnAgregarMedicamento').focus();
+        };
+    });
+
+
+};
+
 
 function getCorrelativoCoddoc(){
     get_correlativo(GlobalCoddoc)
@@ -1165,6 +1306,9 @@ function getTblPacientes(){
 
 async function getNuevaReceta(idcliente,nombre,idturno, edad,seguro){
 
+    document.getElementById('tab-consultamen').click();
+
+
     GlobalSelectedCodPaciente = idcliente;
     GlobalSelectedConsultaSeguro = 'DOCTOR';
 
@@ -1192,7 +1336,7 @@ async function getNuevaReceta(idcliente,nombre,idturno, edad,seguro){
 
     await getTblHistorialConsultas(idcliente)
 
-    $('#modalNuevaReceta').modal('show');
+    //$('#modalNuevaReceta').modal('show');
 
 
 };
@@ -1346,6 +1490,31 @@ function delete_TempReceta(id){
             btn.disabled = true;
             btn.innerHTML = `<i class="fal fa-trash fa-spin"></i>`;
             
+            console.log('id del item ' + id.toString())
+                db_deleteTempReceta(id)
+                .then(()=>{
+                    getTblTempReceta();
+                })
+                .catch(()=>{
+                    funciones.AvisoError('No se pudo eliminar este item')
+                    btn.disabled = false;
+                    btn.innerHTML = `<i class="fal fa-trash"></i>`;
+                })
+
+        }
+    })
+    
+    
+};
+
+function BACKUP_delete_TempReceta(id){
+    funciones.Confirmacion("¿Está seguro que desea quitar este medicamento de la lista?")
+    .then((value)=>{
+        if(value==true){
+            let btn = document.getElementById('rtemp' + id.toString())
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fal fa-trash fa-spin"></i>`;
+            
                 axios.post('/delete_temp_receta',{
                     sucursal:GlobalCodSucursal,
                     id:id
@@ -1382,7 +1551,7 @@ function getDataTempReceta(){
     
 };
 
-function getTblTempReceta(){
+function BACKUP_getTblTempReceta(){
     let container = document.getElementById('tblReceta');
     container.innerHTML = GlobalLoader;
     
@@ -1412,9 +1581,38 @@ function getTblTempReceta(){
 
 };
 
+function getTblTempReceta(){
+    let container = document.getElementById('tblReceta');
+    container.innerHTML = GlobalLoader;
+    
+    let str = '';
+
+    db_selectTempReceta()
+    .then((data) => {
+        data.map((r)=>{
+            str += `
+                <tr class="border-info border-top-0 border-right-0">
+                    <td>${r.DESPROD}</td>
+                    <td>${r.DOSIS}</td>
+                    <td>${r.DURACION}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger btn-circle hand shadow" onclick="delete_TempReceta('${r.ID}')" id="${'rtemp' + r.ID.toString()}">
+                            <i class="fal fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `
+        })
+        container.innerHTML =str;
+    })
+    .catch(() => {
+        container.innerHTML = 'No se pudieron cargar los datos...'
+    })
+
+};
 
 
-function insert_receta(idcliente,obs,correlativo,peso,talla,motivo,diagnostico,historia,antecedentes,examenf,impclinica,plantx){
+function insert_receta(idcliente,obs,correlativo,peso,talla,motivo,diagnostico,historia,antecedentes,examenf,impclinica,plantx,receta){
     return new Promise((resolve,reject)=>{
         axios.post('/insert_receta',{
             sucursal:GlobalCodSucursal,
@@ -1434,10 +1632,11 @@ function insert_receta(idcliente,obs,correlativo,peso,talla,motivo,diagnostico,h
             impclinica:impclinica,
             plantx:plantx,
             idmorbilidad:0,
-            seguro: GlobalSelectedConsultaSeguro
+            seguro: GlobalSelectedConsultaSeguro,
+            json_receta:receta
         })
         .then((response) => {          
-            resolve();             
+            resolve(response.data);             
         }, (error) => {
             reject();
         });
@@ -1491,6 +1690,7 @@ function getTblHistorial(idcliente,nomclie,telefono){
     getDataHistorialReceta(idcliente)
     .then(async(data)=> {  
         data.map((r)=> {
+            receta = '';
             str += `
                 <div class="card card-rounded shadow hand p-2 bg-carpeta">
                     
@@ -1526,12 +1726,12 @@ function getTblHistorial(idcliente,nomclie,telefono){
                             </button>
                         </div>
                         <div class="col-4"> 
-                            <button class="btn btn-success btn-sm hand shadow" onclick="receta_whatsapp('${r.TOKEN}','${r.IDRECETA}','${telefono}')">
+                            <button class="btn btn-success btn-sm hand shadow" onclick="receta_whatsapp('${nomclie}','${telefono}',${r.ID})">
                                 <i class="fal fa-paper-plane"></i>Whatsapp
                             </button>
                         </div>
                         <div class="col-4"> 
-                            <button class="btn btn-info btn-sm hand shadow" onclick="receta_imprimir('${r.TOKEN}','${r.IDRECETA}','DESKTOP')">
+                            <button class="btn btn-info btn-sm hand shadow" onclick="receta_imprimir('${r.TOKEN}','${r.ID}','DESKTOP')">
                                 <i class="fal fa-print"></i>Imprimir
                             </button>
                         </div>
@@ -1579,7 +1779,7 @@ function getDataHistorialConsultas(codcliente){
     
 };
 
-function getTblHistorialConsultas(idcliente){0
+function getTblHistorialConsultas(idcliente){
 
     GlobalSelectedCodPaciente = idcliente;
   
@@ -1595,7 +1795,7 @@ function getTblHistorialConsultas(idcliente){0
             str += `
             <div class="card card-rounded shadow p-2 bg-carpeta">
                 <i class="fal fa-folder-open big-centered-icon"></i>
-                <table><tbody>
+                <table class="table"><tbody>
                     <tr class="">
                         <td><b class="negrita text-danger">${funciones.convertDate(r.FECHA)} - Hora:${r.HORA}</b>
                             <div class="row">
@@ -1707,13 +1907,30 @@ function receta_consulta(fecha,peso,talla,motivo,diagnostico,historia,antecedent
 
 };
 
-function receta_whatsapp(sucursal,idreceta,telefono){
+function receta_whatsapp(nomclie,telefono,receta){
 
     $('#modalHistorialRecetas').modal('hide');
+    
+    console.log('aca...')
 
-    funciones.enviarRecetaWhatsapp2(sucursal,idreceta,telefono);
+    console.log(receta);
+
+    funciones.enviarRecetaWhatsapp2(nomclie,telefono,receta);
 
 };
+
+function BACKUP_receta_whatsapp(sucursal,idreceta,telefono,receta){
+
+    $('#modalHistorialRecetas').modal('hide');
+    
+    console.log('aca...')
+
+    console.log(receta);
+
+    funciones.enviarRecetaWhatsapp2(sucursal,idreceta,telefono,receta);
+
+};
+
 
 function BACKUP_receta_imprimir(sucursal,idreceta){
   
@@ -1795,7 +2012,6 @@ function receta_eliminar(id){
   
 
 };
-
 
 
 
@@ -2299,8 +2515,9 @@ function getDatosPreconsulta(idcliente,nombre,idpreconsulta, edad, peso, talla, 
 
     getTblTempReceta();
 
-    $('#modalNuevaReceta').modal('show');
-
+    //$('#modalNuevaReceta').modal('show');
+    //document.getElementById('consulta-tab').click();
+    document.getElementById('tab-consultamen').click();
 
 };
 

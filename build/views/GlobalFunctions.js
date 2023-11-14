@@ -153,12 +153,12 @@ function getFormatoReceta(sucursal,fecha,paciente,data,obs){
 
 function receta_imprimir(sucursal,idreceta,tipo){
   
-    $('#modalHistorialRecetas').modal('hide');
-
+    console.log('Generando impresión...');
+    
     if(tipo=='DESKTOP'){
         receta_desktop(sucursal,idreceta);
     }else{
-        receta_web();
+        receta_web(sucursal,idreceta);
     }
    
   

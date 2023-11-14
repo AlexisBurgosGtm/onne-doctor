@@ -220,14 +220,43 @@ app.post("/delete_all_temp_receta",function(req,res){
 
 app.post("/insert_receta",function(req,res){
 
-  const {sucursal,correlativo,idcliente,obs,fecha,hora, coddoc,peso,talla,motivo,diagnostico,historia,antecedentes,examenf,impclinica,plantx,idmorbilidad, seguro} = req.body; 
+  const {sucursal,correlativo,idcliente,obs,fecha,hora, coddoc,peso,talla,motivo,diagnostico,historia,antecedentes,examenf,impclinica,plantx,idmorbilidad, seguro,json_receta} = req.body; 
+  
+    let nuevocorrelativo = Number(correlativo) + 1;
+
+    let qryR = `INSERT INTO RECETAS 
+      (TOKEN,IDRECETA,FECHA,HORA,CODCLIENTE,OBS,PESO,TALLA,MOTIVO,DIAGNOSTICO,HISTORIAENF,
+        ANTECEDENTES,EXAMENFISICO,PLANTX,IMPRESIONCLINICA,IDMORBILIDAD,SEGURO,RECETA) 
+        VALUES 
+      ('${sucursal}',${correlativo},'${fecha}','${hora}',${idcliente},'${obs}',${peso},
+        ${talla},'${motivo}','${diagnostico}','${historia}','${antecedentes}','${examenf}',
+        '${plantx}','${impclinica}',${idmorbilidad},'${seguro}','${json_receta}');`;
+    
+    let qryDoc = `UPDATE TIPODOCUMENTOS SET CORRELATIVO=${nuevocorrelativo} WHERE CODDOC='${coddoc}' AND TOKEN='${sucursal}';`
+  
+    execute.update_correlativo_silent(qryDoc);
+
+    execute.query(qryR, res);
+
+});
+
+app.post("/BACKUP_insert_receta",function(req,res){
+
+  const {sucursal,correlativo,idcliente,obs,fecha,hora, coddoc,peso,talla,motivo,diagnostico,historia,antecedentes,examenf,impclinica,plantx,idmorbilidad, seguro,json_receta} = req.body; 
   let nuevocorrelativo = Number(correlativo) + 1;
 
   let qryR = `INSERT INTO RECETAS 
-    (TOKEN,IDRECETA,FECHA,HORA,CODCLIENTE,OBS,PESO,TALLA,MOTIVO,DIAGNOSTICO,HISTORIAENF,ANTECEDENTES,EXAMENFISICO,PLANTX,IMPRESIONCLINICA,IDMORBILIDAD,SEGURO) 
+    (TOKEN,IDRECETA,FECHA,HORA,CODCLIENTE,OBS,PESO,TALLA,MOTIVO,DIAGNOSTICO,HISTORIAENF,
+      ANTECEDENTES,EXAMENFISICO,PLANTX,IMPRESIONCLINICA,IDMORBILIDAD,SEGURO,RECETA) 
       VALUES 
-    ('${sucursal}',${correlativo},'${fecha}','${hora}',${idcliente},'${obs}',${peso},${talla},'${motivo}','${diagnostico}','${historia}','${antecedentes}','${examenf}','${plantx}','${impclinica}',${idmorbilidad},'${seguro}');`;
-  let qryD = `INSERT INTO RECETAS_DETALLE (TOKEN,IDRECETA,MEDICAMENTO,DOSIS,DURACION) SELECT '${sucursal}' AS TOKEN, ${correlativo} AS IDRECETA,TEMP_RECETA.MEDICAMENTO,TEMP_RECETA.DOSIS,TEMP_RECETA.DURACION FROM TEMP_RECETA WHERE TEMP_RECETA.TOKEN='${sucursal}';`
+    ('${sucursal}',${correlativo},'${fecha}','${hora}',${idcliente},'${obs}',${peso},
+    ${talla},'${motivo}','${diagnostico}','${historia}','${antecedentes}','${examenf}',
+    '${plantx}','${impclinica}',${idmorbilidad},'${seguro}','${json_receta}');`;
+    
+  let qryD = `INSERT INTO RECETAS_DETALLE 
+            (TOKEN,IDRECETA,MEDICAMENTO,DOSIS,DURACION,CODCLIENTE,FECHA) 
+            SELECT '${sucursal}' AS TOKEN, ${correlativo} AS IDRECETA,TEMP_RECETA.MEDICAMENTO,TEMP_RECETA.DOSIS,TEMP_RECETA.DURACION, ${idcliente} AS CODCLIENTE, '${fecha}' AS FECHA FROM TEMP_RECETA WHERE TEMP_RECETA.TOKEN='${sucursal}';`
+  
   let qryDoc = `UPDATE TIPODOCUMENTOS SET CORRELATIVO=${nuevocorrelativo} WHERE CODDOC='${coddoc}' AND TOKEN='${sucursal}';`
 
   execute.query(qryD + qryR + qryDoc, res);
@@ -243,6 +272,7 @@ app.post("/insert_preconsulta",function(req,res){
       VALUES 
     ('${sucursal}','${fecha}',${idcliente},${peso},${talla},'${motivo}','${diagnostico}','${historia}','${antecedentes}','${examenf}','${plantx}','${impclinica}',${idmorbilidad},'${seguro}');`;
   
+    
   execute.query(qry, res);
 
 });
@@ -273,11 +303,16 @@ app.post("/select_historial_recetas",function(req,res){
 
   const {sucursal,codclie} = req.body; 
   
-  let qry = `SELECT TOKEN, ID, IDRECETA, FECHA, HORA, OBS,PESO, TALLA, ifnull(MOTIVO,'SN') AS MOTIVO, ifnull(DIAGNOSTICO,'SN') AS DIAGNOSTICO,
-  ifnull(HISTORIAENF,'SN') AS HISTORIAENF, ifnull(ANTECEDENTES,'SN') AS ANTECEDENTES, ifnull(EXAMENFISICO,'SN') AS EXAMENFISICO, 
-  ifnull(PLANTX,'SN') AS PLANTX, ifnull(IMPRESIONCLINICA,'SN') AS IMPRESIONCLINICA
-   FROM RECETAS WHERE CODCLIENTE=${codclie}
-    ORDER BY ID DESC;`;
+  let qry = `SELECT TOKEN, ID, IDRECETA, CODCLIENTE, 
+          FECHA, HORA, OBS,PESO, TALLA, 
+          ifnull(MOTIVO,'SN') AS MOTIVO, ifnull(DIAGNOSTICO,'SN') AS DIAGNOSTICO,
+          ifnull(HISTORIAENF,'SN') AS HISTORIAENF, ifnull(ANTECEDENTES,'SN') AS ANTECEDENTES, 
+          ifnull(EXAMENFISICO,'SN') AS EXAMENFISICO, 
+          ifnull(PLANTX,'SN') AS PLANTX, 
+          ifnull(IMPRESIONCLINICA,'SN') AS IMPRESIONCLINICA,
+          ifnull(RECETA,'') AS RECETA
+        FROM RECETAS WHERE CODCLIENTE=${codclie}
+        ORDER BY ID DESC;`;
 
   execute.query(qry, res);
 
@@ -289,7 +324,8 @@ app.post("/select_historial_consultas",function(req,res){
   
   let qry = `SELECT TOKEN, ID, IDRECETA, FECHA, HORA, OBS,PESO, TALLA, ifnull(MOTIVO,'SN') AS MOTIVO, ifnull(DIAGNOSTICO,'SN') AS DIAGNOSTICO,
   ifnull(HISTORIAENF,'SN') AS HISTORIAENF, ifnull(ANTECEDENTES,'SN') AS ANTECEDENTES, ifnull(EXAMENFISICO,'SN') AS EXAMENFISICO, 
-  ifnull(PLANTX,'SN') AS PLANTX, ifnull(IMPRESIONCLINICA,'SN') AS IMPRESIONCLINICA
+  ifnull(PLANTX,'SN') AS PLANTX, ifnull(IMPRESIONCLINICA,'SN') AS IMPRESIONCLINICA,
+  ifnull(RECETA,'') AS RECETA
    FROM RECETAS WHERE CODCLIENTE=${codclie}
     ORDER BY ID DESC LIMIT 10;`;
 
@@ -317,7 +353,10 @@ app.post("/select_receta",function(req,res){
               recetas_detalle.DURACION
             FROM recetas
               LEFT OUTER JOIN recetas_detalle
-                ON recetas.IDRECETA = recetas_detalle.IDRECETA AND recetas.TOKEN= recetas_detalle.TOKEN
+                ON recetas.IDRECETA = recetas_detalle.IDRECETA 
+                AND recetas.TOKEN= recetas_detalle.TOKEN
+                AND recetas.CODCLIENTE = recetas_detalle.CODCLIENTE
+                AND recetas.FECHA = recetas_detalle.FECHA
               LEFT OUTER JOIN clientes
                 ON recetas.CODCLIENTE = clientes.IDCLIENTE
                   AND recetas.TOKEN= clientes.TOKEN
@@ -326,6 +365,33 @@ app.post("/select_receta",function(req,res){
   execute.query(qry, res);
 
 });
+
+app.post("/select_receta_id",function(req,res){
+
+  const {sucursal,id} = req.body; 
+  
+  let qry = `SELECT
+              recetas.IDRECETA,
+              recetas.FECHA,
+              recetas.HORA,
+              recetas.CODCLIENTE,
+              clientes.NOMCLIE,
+              clientes.TELEFONOS,
+              clientes.FECHANACIMIENTO,
+              recetas.OBS,
+              ifnull(recetas.RECETA,'') AS RECETA
+            FROM recetas
+              LEFT OUTER JOIN clientes
+                ON recetas.CODCLIENTE = clientes.IDCLIENTE
+                  AND recetas.TOKEN= clientes.TOKEN
+            WHERE recetas.ID = ${id} 
+            and recetas.TOKEN='${sucursal}' `;
+
+
+  execute.query(qry, res);
+
+});
+
 
 app.post("/select_lista_preconsultas",function(req,res){
 

@@ -14,23 +14,7 @@ var mysql = require('mysql');
 let execute = {
     query:(qry,res)=>{
         
-        /*
-        var pool  = mysql.createPool(config);
-        pool.query(qry, function (error, results, fields) {
-          
-            //if (error) throw error;
-            if(error){
-                res.send(error);
-            }else{
-                res.json(results);
-            }
-           
-            //console.log('The solution is: ', results[0].solution);
-            
-        });
-        */
-
-        var connection = mysql.createConnection(config);
+      var connection = mysql.createConnection(config);
           
           connection.connect();
           
@@ -39,6 +23,23 @@ let execute = {
                 res.send(error);
             }else{
                 res.json(results);
+            }
+          });
+          
+          connection.end();
+     
+    },
+    update_correlativo_silent:(qry)=>{
+        
+      var connection = mysql.createConnection(config);
+          
+          connection.connect();
+          
+          connection.query(qry, function (error, results, fields) {
+            if(error){
+                console.log(error);
+            }else{
+                console.log(results);
             }
           });
           

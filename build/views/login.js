@@ -2,14 +2,14 @@ function getView(){
     let view = {
         formLogin:()=>{
             return `
-                <div class="card col-sm-12 col-md-4 col-lg-4 col-xl-4 card-rounded shadow">
+                <div class="card col-sm-12 col-md-6 col-lg-6 col-xl-6 card-rounded shadow">
                     <div class="card-header text-center bg-white">
                          <img src="../favicon.png" with="80" height="80">
                     </div>
                     <div class="card-body">
                     
                         <div class="form-group">
-                            <label>Usuario</label>
+                            <label class="text-especial negrita">Usuario</label>
                             <select class="form-control" id="cmbTipo">
                                 <option value="DOCTOR">DOCTOR</option>
                                 <option value="SECRETARIA">SECRETARIA</option>
@@ -17,26 +17,30 @@ function getView(){
                         </div>
 
                         <div class="form-group">
-                            <label>Consultorio:</label>
+                            <label class="text-especial negrita">Consultorio:</label>
                             <input type="text" class="form-control" id="txtU">
                         </div>
 
                         <div class="form-group">
-                            <label>Contraseña</label>
+                            <label class="text-especial negrita">Contraseña</label>
                             <input type="password" class="form-control" id="txtP">
                         </div>
                         <br>
-                        <div class="form-group text-right">
-                            <button class="btn btn-info shadow btn-lg" id="btnIniciar">
-                                <i class="fal fa-lock"></i> Iniciar
-                            </button>
+                        <div class="row">
+                            <div class="col-6">
+                                <small class="negrita">por Alexis Burgos</small>
+                                <br>
+                                <small class="negrita">modif:14.11.2023</small>
+                            </div>
+                            <div class="col-6 text-right">
+                                <button class="btn btn-especial shadow btn-xl btn-circle" id="btnIniciar">
+                                    <i class="fal fa-lock"></i>
+                                </button>
+                            </div>
                         </div>
 
-
                     </div>
-                    <div class="card-footer p-4">
-                        <small class="negrita">por Alexis Burgos(+502-57255092) v09.2023r1</small>
-                    </div>
+                    
                 </div>
             `
         }
@@ -45,8 +49,11 @@ function getView(){
     //root es una variable que representa el contenedor principal
     // ahi dibulo el html 
     root.innerHTML = view.formLogin();
-    rootMenuFooter.innerHTML = 'Onne Business';
+    
+    rootMenuFooter.innerHTML = '<b class="text-white">Onne Business</b>';
 }
+
+
 
 function addListeners(){
 
@@ -84,6 +91,8 @@ function addListeners(){
 
             if(resultado==false){
                 funciones.AvisoError('Usuario o clave incorrecta'); 
+                btnIniciar.disabled = false;
+                btnIniciar.innerHTML = '<i class="fal fa-lock"></i>';
             }else{
                 if(GlobalTipoUsuario=='DOCTOR'){
                     GlobalConfPa = p;
@@ -101,7 +110,7 @@ function addListeners(){
             funciones.AvisoError('No se pudo iniciar sesión');
             GlobalCodSucursal = '';
             btnIniciar.disabled = false;
-            btnIniciar.innerHTML = '<i class="fal fa-lock"></i> Iniciar';
+            btnIniciar.innerHTML = '<i class="fal fa-lock"></i>';
         })
         
         

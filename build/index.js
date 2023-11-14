@@ -24,7 +24,15 @@ function iniciar(){
           //$status.innerText = result;
         });
       
-}
+        document.getElementById('btnLogOut').addEventListener('click',()=>{
+            funciones.Confirmacion('¿Está seguro que desea salir?')
+            .then((value)=>{
+              if(value==true){
+                  Navegar.login();
+                }
+              })
+        })
+};
 
 
 iniciar();

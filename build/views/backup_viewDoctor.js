@@ -1,55 +1,24 @@
 function getView(){
     let view = {
-        menu_old:()=>{
-            return `
-            <div class="row col-12">
-                <div class="col-6 col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                    <div id="men1" class="card card-rounded shadow hand bg-success text-white" onclick="document.getElementById('tab-espera').click()">
-                        <div class="card-body">
-                            <i class="fal fa-list"></i>Espera (<label class="negrita" id="lbMenTotalEspera">-</label>)
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                    <div id="men2" class="card card-rounded shadow hand bg-danger text-white" onclick="document.getElementById('tab-preconsultas').click()">
-                        <div class="card-body">
-                            <i class="fal fa-comments"></i>PlanDx (<label class="negrita" id="lbMenTotalDx">-</label>)
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                    <div id="men3" class="card card-rounded shadow hand bg-info text-white" onclick="document.getElementById('tab-pacientes').click()">
-                        <div class="card-body">
-                            <i class="fal fa-edit"></i>Pacientes
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-sm-6 col-md-3 col-xl-3 col-lg-3">
-                    <div id="men4" class="card card-rounded shadow hand bg-warning text-white" onclick="document.getElementById('tab-reportes').click()">
-                        <div class="card-body">
-                            <i class="fal fa-chart-pie"></i>Reportes</a>
-                        </div>
-                    </div>
-                </div>
-            </div>  
-            `
-        },
         menu:()=>{
             return `
         
-                <button class="btn btn-sm border-white text-white" onclick="document.getElementById('tab-espera').click()">
+                <button class="col-auto btn btn-sm border-white text-white" onclick="document.getElementById('tab-espera').click()">
                     <i class="fal fa-list"></i>    
                     <small>Espera(<label class="negrita" id="lbMenTotalEspera">-</label>)</small>
                 </button>
-                <button class="btn btn-sm border-white text-white" onclick="document.getElementById('tab-preconsultas').click()">
+                
+                <button class="col-auto btn btn-sm border-white text-white" onclick="document.getElementById('tab-preconsultas').click()">
                     <i class="fal fa-comments"></i>    
                     <small>PlanDx(<label class="negrita" id="lbMenTotalDx">-</label>)</small>
                 </button>
-                <button class="btn btn-sm border-white text-white" onclick="document.getElementById('tab-pacientes').click()">
+                
+                <button class="col-auto btn btn-sm border-white text-white" onclick="document.getElementById('tab-pacientes').click()">
                     <i class="fal fa-edit"></i> 
                     <small>Pacientes</small>
                 </button>
-                <button class="btn btn-sm border-white text-white" onclick="document.getElementById('tab-reportes').click()">
+
+                <button class="col-auto btn btn-sm border-white text-white" onclick="document.getElementById('tab-reportes').click()">
                     <i class="fal fa-chart-pie"></i><small>Reportes</small>
                 </button>
               
@@ -74,6 +43,9 @@ function getView(){
                         <div class="tab-pane fade" id="reportes" role="tabpanel" aria-labelledby="tab-reportes">
                             ${view.homeReportes()}
                         </div>
+                        <div class="tab-pane fade" id="consultamen" role="tabpanel" aria-labelledby="tab-consulta">
+                            ${view.homeNuevaReceta()}
+                        </div>
                     </div>
                     
                     <ul class="nav nav-tabs hidden" id="myTabHome" role="tablist">
@@ -93,6 +65,10 @@ function getView(){
                             <a class="nav-link negrita text-warning" id="tab-reportes" data-toggle="tab" href="#reportes" role="tab" aria-controls="profile" aria-selected="false">
                                 <i class="fal fa-chart-pie"></i>Reportes</a>
                         </li> 
+                        <li class="nav-item">
+                            <a class="nav-link negrita text-warning" id="tab-consultamen" data-toggle="tab" href="#consultamen" role="tab" aria-controls="profile" aria-selected="false">
+                                <i class="fal fa-chart-pie"></i>Consulta</a>
+                        </li> 
                                 
                     </ul>
 
@@ -105,15 +81,15 @@ function getView(){
         homePacientes:()=>{
             return `
             <div class="card-body bg-white shadow">
-                <h5 class="text-info negrita">Listado de Pacientes</h5>
+                <h5 class="text-especial negrita">Listado de Pacientes</h5>
                 
                 <div class="row">
                     <div class="form-group col-sm-12 col-md-6 col-lg-4 col-xl-4">
 
                         <div class="input-group">
-                            <input type="text" class="form-control" id="txtBuscarReceta" placeholder="Escriba para Buscar...">
+                            <input type="text" class="form-control border-especial" id="txtBuscarReceta" placeholder="Escriba para Buscar...">
                             <div class="input-group-append">
-                                <button class="btn btn-info shadow" id="btnBuscarP">
+                                <button class="btn btn-especial shadow" id="btnBuscarP">
                                     <i class="fal fa-search"></i>Buscar
                                 </button>    
                             </div>
@@ -129,7 +105,7 @@ function getView(){
                 <div class="row">
                     <div class="table-responsive col-12">
                         <table class="table table-responsive table-hover" id="tblPacientes">
-                            <thead  class="bg-info text-white">
+                            <thead  class="bg-especial text-white">
                                 <tr>
                                     <td>Paciente / Teléfono / Edad</td>
                                   
@@ -169,7 +145,7 @@ function getView(){
                                         
                     <div class="table-responsive col-12">
                         <table class="table table-responsive table-hover" id="tblEspera">
-                            <thead class="bg-secondary text-white">
+                            <thead class="bg-especial text-white">
                                 <tr>
                                     <td>Paciente</td>
                                     <td>Seguro/Tipo Consulta</td>
@@ -240,7 +216,96 @@ function getView(){
             `
 
         },
-        modalNuevaReceta:()=>{
+        homeNuevaReceta:()=>{
+            return `
+                    <div class="card card-rounded fullhorizontal col-12">
+                   
+                        <div class="card-body">
+                                <h5 class="text-danger" id="lbPaciente">Consumidor Final</h5>
+                                <h5 class="text-info" id="lbEdadPaciente">-</h5>
+                                
+                              
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active negrita text-info" id="home-tab" data-toggle="tab" href="#consulta" role="tab" aria-controls="home" aria-selected="true">
+                                        <i class="fal fa-edit"></i>Consulta</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link negrita text-primary" id="receta-tab" data-toggle="tab" href="#receta" role="tab" aria-controls="profile" aria-selected="false">
+                                        <i class="fal fa-print"></i>Receta</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link negrita text-secondary" id="historial-tab" data-toggle="tab" href="#historialp" role="tab" aria-controls="profile" aria-selected="false">
+                                        <i class="fal fa-list"></i>Historial</a>
+                                </li>
+                               
+                            </ul>
+
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="consulta" role="tabpanel" aria-labelledby="home-tab">
+                                    ${view.formConsulta()}
+                                    <div class="row">
+                                        
+                                        
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-success btn-md hand shadow" id="btnIrReceta">
+                                                <i class="fal fa-list"></i> Continuar a la Receta
+                                            </button>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-danger btn-md hand shadow" id="btnGuardarPreconsulta">
+                                                <i class="fal fa-save"></i> Guardar Preconsulta
+                                            </button>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                           
+                                <div class="tab-pane fade" id="receta" role="tabpanel" aria-labelledby="receta-tab">
+                                    ${view.formReceta()}
+
+                                    <div class="modal-footer">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-secondary btn-xl btn-circle hand shadow" id="btnCerrarModalRecetaNueva">
+                                                    <i class="fal fa-angle-left"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-info btn-xl btn-circle hand shadow" id="btnGuardarReceta">
+                                                    <i class="fal fa-save"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-outline-info btn-xl btn-circle hand shadow" id="btnGuardarRecetaPrint">
+                                                    <i class="fal fa-print"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="historialp" role="tabpanel" aria-labelledby="historial-tab">
+                                    <h3 class="text-danger">Consultas anteriores</h3>
+                                         
+                                    <div id="containerHistorialP">
+                                    </div>
+                                     
+                                    
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                
+            `
+        },
+        BACKUP_modalNuevaReceta:()=>{
             return `
             <div class="modal fade" id="modalNuevaReceta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-right modal-xl" role="document">
@@ -313,20 +378,12 @@ function getView(){
                                 </div>
 
                                 <div class="tab-pane fade" id="historialp" role="tabpanel" aria-labelledby="historial-tab">
-                                    <div class="card shadow card-rounded p-4">
-                                        <div class="table-responsive">
-                                            <table class="table table-responsive">
-                                                <thead class="bg-secondary text-white">
-                                                    <tr>
-                                                        <td>Consultas anteriores</td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="containerHistorialP">
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    
+                                    <h3 class="text-danger">Consultas anteriores</h3>
+                                         
+                                    <div id="containerHistorialP">
                                     </div>
+                                     
+                                    
                                 </div>
 
 
@@ -511,26 +568,13 @@ function getView(){
 
                         <div class="tab-content" id="myTabHomeContent">
                             <div class="tab-pane fade show active" id="tconslistado" role="tabpanel" aria-labelledby="home-tab">
-                                
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
-                                            <thead class="bg-secondary text-white">
-                                                <tr>
-                                                    <td>Fecha</td>
-                                                    <td>C</td>
-                                                    <td>W</td>
-                                                    <td>P</td>
-                                                    <td>E</td>
-                                                </tr>
-                                                </thead>         
-                                            <tbody id="tblHistorialRecetas">
+
+                                <br>
+
+                                <div id="tblHistorialRecetas">
                                             
-                                            </tbody>                       
-                                        </table>
                                 
-                                    </div>
-                                            
-                                                                  
+                                </div>                                                    
                             </div>
                             
                             <div class="tab-pane fade" id="tconsgraficas" role="tabpanel" aria-labelledby="receta-tab">
@@ -770,8 +814,10 @@ function getView(){
         }
     }
 
-    root.innerHTML = view.body() + view.modalNuevaReceta() + view.modalHistorialRecetas() + view.modalDatosConsulta() + view.modalNuevoPaciente() + view.modalEditarPaciente();
+    //root.innerHTML = view.body() + view.modalNuevaReceta() + view.modalHistorialRecetas() + view.modalDatosConsulta() + view.modalNuevoPaciente() + view.modalEditarPaciente();
+    root.innerHTML = view.body()  + view.modalHistorialRecetas() + view.modalDatosConsulta() + view.modalNuevoPaciente() + view.modalEditarPaciente();
     rootMenuFooter.innerHTML = view.menu();
+
 };
 
 function addListeners(){
@@ -781,13 +827,28 @@ function addListeners(){
     //funciones.animateCSS('men3','fadeInBottomLeft');
     //funciones.animateCSS('men4','fadeInBottomLeft');
  
-    
     let btnBuscarP = document.getElementById('btnBuscarP');
     btnBuscarP.addEventListener('click',()=>{
 
         getTblPacientes();
 
     });
+
+    document.getElementById('txtBuscarReceta').addEventListener('keyup',(e)=>{
+        
+        if (e.key === "Enter") {
+            // Cancel the default action, if needed
+            //e.preventDefault();
+            // Trigger the button element with a click
+            btnBuscarP.click();
+        };
+        if (e.keyCode === 13) {
+            btnBuscarP.click();
+        };
+
+    });
+
+  
 
     document.getElementById('FechaNacimiento').value = funciones.getFecha();
     let btnNuevoPaciente = document.getElementById('btnNuevoPaciente');
@@ -847,7 +908,10 @@ function addListeners(){
     });
 
     //RECETA
-    document.getElementById('btnCerrarModalRecetaNueva').addEventListener('click',()=>{$('#modalNuevaReceta').modal('hide')});
+    document.getElementById('btnCerrarModalRecetaNueva').addEventListener('click',()=>{
+        //$('#modalNuevaReceta').modal('hide')
+        document.getElementById('home-tab').click();
+    });
 
     let btnAgregarMedicamento = document.getElementById('btnAgregarMedicamento');
     btnAgregarMedicamento.addEventListener('click',()=>{
@@ -936,7 +1000,7 @@ function addListeners(){
                     }
 
                     if(imprimeReceta=='SI'){
-                        receta_imprimir(GlobalCorrelativo);
+                        receta_imprimir(GlobalCodSucursal,GlobalCorrelativo,'DESKTOP');
                     }
                     
 
@@ -1001,7 +1065,7 @@ function addListeners(){
                     funciones.Aviso('Pre-Consulta Guardada exitosamente!!');
 
                     btnGuardarPreconsulta.disabled = false;
-                    btnGuardarPreconsulta.innerHTML = '<i class="fal fa-save"></i>';
+                    btnGuardarPreconsulta.innerHTML = '<i class="fal fa-save"></i> Guardar Preconsulta';
 
                     $("#modalNuevaReceta").modal('hide');
 
@@ -1021,7 +1085,7 @@ function addListeners(){
                 })
                 .catch(()=>{
                     btnGuardarPreconsulta.disabled = false;
-                    btnGuardarPreconsulta.innerHTML = '<i class="fal fa-save"></i>';
+                    btnGuardarPreconsulta.innerHTML = '<i class="fal fa-save"></i> Guardar Preconsulta';
                     funciones.AvisoError('No se pudo guardar la pre-consulta')
                 })
                
@@ -1151,7 +1215,7 @@ function getTblPacientes(){
                             </div>
                             <div class="col-4">
                                 <button class="btn btn-secondary btn-sm hand shadow" onclick="getTblHistorial('${r.IDCLIENTE}','${r.NOMCLIE}','${r.TELEFONOS}')">
-                                    <i class="fal fa-list"></i>Historial
+                                    <i class="fal fa-folder-open"></i>Historial
                                 </button>
                             </div>
                             <div class="col-4">
@@ -1184,9 +1248,10 @@ function getTblPacientes(){
     
 };
 
-
-
 async function getNuevaReceta(idcliente,nombre,idturno, edad,seguro){
+
+    document.getElementById('tab-consultamen').click();
+
 
     GlobalSelectedCodPaciente = idcliente;
     GlobalSelectedConsultaSeguro = 'DOCTOR';
@@ -1215,7 +1280,7 @@ async function getNuevaReceta(idcliente,nombre,idturno, edad,seguro){
 
     await getTblHistorialConsultas(idcliente)
 
-    $('#modalNuevaReceta').modal('show');
+    //$('#modalNuevaReceta').modal('show');
 
 
 };
@@ -1301,29 +1366,46 @@ function edit_paciente(id,nombre,fechanacimiento,telefono,direccion,coddepto){
 };
 
 function delete_paciente(id){
-    funciones.Confirmacion("¿Está seguro que desea ELIMINAR este Paciente y todo su historial?")
-    .then((value)=>{
-        if(value==true){
-            let btn = document.getElementById('p' + id.toString())
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fal fa-trash fa-spin"></i>`;
-            
-                axios.post('/delete_paciente',{
-                    sucursal:GlobalCodSucursal,
-                    id:id
-                })
-                .then((response) => {   
-                    let data = response.data; 
-                    getTblPacientes();
-                }, (error) => {
-                    funciones.AvisoError('No se pudo eliminar este item')
-                    btn.disabled = false;
-                    btn.innerHTML = `<i class="fal fa-trash"></i>`;
-                
-                });
+   
+    funciones.solicitarClave()
+    .then((name)=>{
+        if(name==GlobalConfPa){
 
+            funciones.Confirmacion("¿Está seguro que desea ELIMINAR este Paciente y todo su historial?")
+            .then((value)=>{
+                if(value==true){
+                    let btn = document.getElementById('p' + id.toString())
+                    btn.disabled = true;
+                    btn.innerHTML = `<i class="fal fa-trash fa-spin"></i>`;
+                    
+                        axios.post('/delete_paciente',{
+                            sucursal:GlobalCodSucursal,
+                            id:id
+                        })
+                        .then((response) => {   
+                            let data = response.data; 
+                            getTblPacientes();
+                        }, (error) => {
+                            funciones.AvisoError('No se pudo eliminar este item')
+                            btn.disabled = false;
+                            btn.innerHTML = `<i class="fal fa-trash"></i>`;
+                        
+                        });
+        
+                }
+            })
+
+        }else{
+            funciones.AvisoError('Clave inválida');
+            return;
         }
     })
+    .catch((name)=>{
+        funciones.AvisoError('Clave inválida');
+        return;
+    })
+    
+   
     
     
 };
@@ -1497,34 +1579,57 @@ function getTblHistorial(idcliente,nomclie,telefono){
     getDataHistorialReceta(idcliente)
     .then(async(data)=> {  
         data.map((r)=> {
-            str += `<tr>
-                        <td>${funciones.convertDate(r.FECHA)}
-                            <br>
-                            <small class="negrita">Hora:${r.HORA}</small>
-                            <br>
-                            <small class="negrita">No.:${r.IDRECETA}</small>
-                        </td>
-                        <td>
-                            <button class="btn btn-secondary btn-circle btn-md hand shadow" onclick="receta_consulta('${funciones.convertDate(r.FECHA)}','${r.PESO}','${r.TALLA}','${r.MOTIVO.replace(/(\r\n|\n|\r)/gm, "*-")}','${r.DIAGNOSTICO.replace(/(\r\n|\n|\r)/gm, "*-")}','${funciones.quitarEnter(r.HISTORIAENF)}','${funciones.quitarEnter(r.ANTECEDENTES)}','${funciones.quitarEnter(r.EXAMENFISICO)}','${funciones.quitarEnter(r.IMPRESIONCLINICA)}','${funciones.quitarEnter(r.PLANTX)}')">
-                                <i class="fal fa-edit"></i>
-                            </button>
-                        </td>
-                        <td>
-                            <button class="btn btn-success btn-circle btn-md hand shadow" onclick="receta_whatsapp('${r.TOKEN}','${r.IDRECETA}','${telefono}')">
-                                <i class="fal fa-whatsapp"></i>w
-                            </button>
-                        </td>
-                        <td>
-                            <button class="btn btn-info btn-circle btn-md hand shadow" onclick="receta_imprimir('${r.TOKEN}','${r.IDRECETA}')">
-                                <i class="fal fa-print"></i>
-                            </button>
-                        </td>
-                        <td>
+            str += `
+                <div class="card card-rounded shadow hand p-2 bg-carpeta">
+                    
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="">Fecha:</label>
+                                <b>${funciones.convertDate(r.FECHA)}</b>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <small class="negrita">Hora:${r.HORA}</small>
+                                <br>
+                                <small class="negrita">No.:${r.IDRECETA}</small>
+                            </div>
+                        </div>
+
+                        <div class="col-2"> 
                             <button class="btn btn-danger btn-circle btn-md hand shadow" onclick="receta_eliminar('${r.IDRECETA}')" id="${'r' + r.IDRECETA.toString()}">
                                 <i class="fal fa-trash"></i>
                             </button>
-                        </td>
-                    </tr>`
+                        </div> 
+
+                    </div>
+                    <i class="fal fa-folder-open big-centered-icon"></i>
+                    <br>
+                    <div class="row">
+
+                        <div class="col-4">  
+                            <button class="btn btn-secondary btn-sm hand shadow" onclick="receta_consulta('${funciones.convertDate(r.FECHA)}','${r.PESO}','${r.TALLA}','${r.MOTIVO.replace(/(\r\n|\n|\r)/gm, "*-")}','${r.DIAGNOSTICO.replace(/(\r\n|\n|\r)/gm, "*-")}','${funciones.quitarEnter(r.HISTORIAENF)}','${funciones.quitarEnter(r.ANTECEDENTES)}','${funciones.quitarEnter(r.EXAMENFISICO)}','${funciones.quitarEnter(r.IMPRESIONCLINICA)}','${funciones.quitarEnter(r.PLANTX)}')">
+                                <i class="fal fa-edit"></i>Consulta
+                            </button>
+                        </div>
+                        <div class="col-4"> 
+                            <button class="btn btn-success btn-sm hand shadow" onclick="receta_whatsapp('${r.TOKEN}','${r.IDRECETA}','${telefono}')">
+                                <i class="fal fa-paper-plane"></i>Whatsapp
+                            </button>
+                        </div>
+                        <div class="col-4"> 
+                            <button class="btn btn-info btn-sm hand shadow" onclick="receta_imprimir('${r.TOKEN}','${r.IDRECETA}','DESKTOP','${idcliente}','${r.FECHA}')">
+                                <i class="fal fa-print"></i>Imprimir
+                            </button>
+                        </div>
+                       
+
+                    </div>
+
+                </div>
+                <hr class="solid">  
+                   `
         })
         container.innerHTML = str;
         try {
@@ -1562,7 +1667,7 @@ function getDataHistorialConsultas(codcliente){
     
 };
 
-function getTblHistorialConsultas(idcliente){
+function getTblHistorialConsultas(idcliente){0
 
     GlobalSelectedCodPaciente = idcliente;
   
@@ -1575,7 +1680,11 @@ function getTblHistorialConsultas(idcliente){
     getDataHistorialConsultas(idcliente)
     .then(async(data)=> {  
         data.map((r)=> {
-            str += `<tr class="border-primary border-left-0 border-right-0 border-top-0 border-bottom">
+            str += `
+            <div class="card card-rounded shadow p-2 bg-carpeta">
+                <i class="fal fa-folder-open big-centered-icon"></i>
+                <table><tbody>
+                    <tr class="">
                         <td><b class="negrita text-danger">${funciones.convertDate(r.FECHA)} - Hora:${r.HORA}</b>
                             <div class="row">
                                 <div class="col-6">
@@ -1609,7 +1718,10 @@ function getTblHistorialConsultas(idcliente){
                             </div>
                         </td>
             
-                    </tr>`
+                    </tr>
+                </tbody></table>
+            </div>
+            <hr class"solid">`
         })
         container.innerHTML = str;
        
@@ -1691,7 +1803,7 @@ function receta_whatsapp(sucursal,idreceta,telefono){
 
 };
 
-function receta_imprimir(sucursal,idreceta){
+function BACKUP_receta_imprimir(sucursal,idreceta){
   
     $('#modalHistorialRecetas').modal('hide');
 
@@ -1727,29 +1839,49 @@ function receta_imprimir(sucursal,idreceta){
 };
 
 function receta_eliminar(id){
-    funciones.Confirmacion("¿Está seguro que desea ELIMINAR esta receta?")
-    .then((value)=>{
-        if(value==true){
-            let btn = document.getElementById('r' + id.toString())
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fal fa-trash fa-spin"></i>`;
-            
-                axios.post('/delete_receta',{
-                    sucursal:GlobalCodSucursal,
-                    id:id
-                })
-                .then((response) => {   
-                    let data = response.data; 
-                    getTblHistorial(GlobalSelectedCodPaciente,GlobalSelectedNomPaciente);
-                }, (error) => {
-                    funciones.AvisoError('No se pudo eliminar esta Receta')
-                    btn.disabled = false;
-                    btn.innerHTML = `<i class="fal fa-trash"></i>`;
-                
-                });
 
+    $('#modalHistorialRecetas').modal('hide');
+
+    funciones.solicitarClave()
+    .then((name)=>{
+        if(name==GlobalConfPa){
+
+            funciones.Confirmacion("¿Está seguro que desea ELIMINAR esta receta?")
+            .then((value)=>{
+                if(value==true){
+                    let btn = document.getElementById('r' + id.toString())
+                    btn.disabled = true;
+                    btn.innerHTML = `<i class="fal fa-trash fa-spin"></i>`;
+                    
+                        axios.post('/delete_receta',{
+                            sucursal:GlobalCodSucursal,
+                            id:id
+                        })
+                        .then((response) => {   
+                            let data = response.data; 
+                            getTblHistorial(GlobalSelectedCodPaciente,GlobalSelectedNomPaciente);
+                        }, (error) => {
+                            funciones.AvisoError('No se pudo eliminar esta Receta')
+                            btn.disabled = false;
+                            btn.innerHTML = `<i class="fal fa-trash"></i>`;
+                        
+                        });
+        
+                }
+            })
+
+        }else{
+            funciones.AvisoError('Clave inválida');
+            return;
         }
     })
+    .catch((name)=>{
+        funciones.AvisoError('Clave inválida');
+        return;
+    })
+
+  
+
 };
 
 
@@ -1983,7 +2115,7 @@ function getTblTurnos(){
                         <div class="row">
                             <div class="col-4">
                                 <button class="btn btn-secondary btn-sm hand shadow" onclick="getTblHistorial('${r.IDCLIENTE}','${r.NOMCLIE}')">
-                                    <i class="fal fa-list"></i>Histor
+                                    <i class="fal fa-folder-open"></i>Histor
                                 </button>        
                             </div>
                             <div class="col-4">
@@ -2255,8 +2387,9 @@ function getDatosPreconsulta(idcliente,nombre,idpreconsulta, edad, peso, talla, 
 
     getTblTempReceta();
 
-    $('#modalNuevaReceta').modal('show');
-
+    //$('#modalNuevaReceta').modal('show');
+    //document.getElementById('consulta-tab').click();
+    document.getElementById('tab-consultamen').click();
 
 };
 
