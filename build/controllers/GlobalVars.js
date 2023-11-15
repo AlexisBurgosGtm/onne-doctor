@@ -38,7 +38,7 @@ let GlobalTipoUsuario = '';
 let GlobalSelectedCodPaciente = 0;
 let GlobalSelectedNomPaciente = '';
 let GlobalSelectedConsultaSeguro = '';
-
+let GlobalSelectedIdReceta = 0;
 
 let GlobalEncabezadoReceta = 'Clínica Médica AMPIER - Dr. Pablo A. Vásquez Ampié' + "\n" + 'Dirección: Frente al centro de salud, Retalhuleu. Teléfono: 7771-2416 / 5199-5119' + "\n" + "-----------------" + "\n";
 let GlobalFooterReceta = '';

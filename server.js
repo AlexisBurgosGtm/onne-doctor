@@ -240,6 +240,20 @@ app.post("/insert_receta",function(req,res){
 
 });
 
+app.post("/update_receta_consulta",function(req,res){
+
+    const {sucursal,id,receta,obs,proximacita} = req.body; 
+    
+    let qry = `UPDATE RECETAS 
+          SET RECETA='${receta}',
+              PROXIMACITA='${proximacita}',
+              OBS='${obs}' 
+          WHERE ID=${id} AND TOKEN='${sucursal}';`;
+
+    execute.query(qry, res);
+
+}); 
+
 app.post("/BACKUP_insert_receta",function(req,res){
 
   const {sucursal,correlativo,idcliente,obs,fecha,hora, coddoc,peso,talla,motivo,diagnostico,historia,antecedentes,examenf,impclinica,plantx,idmorbilidad, seguro,json_receta} = req.body; 

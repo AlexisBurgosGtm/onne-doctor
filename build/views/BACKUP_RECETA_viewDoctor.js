@@ -8,6 +8,11 @@ function getView(){
                     <small>Espera(<label class="negrita" id="lbMenTotalEspera">-</label>)</small>
                 </button>
                 
+                <button class="col-auto btn btn-sm border-white text-white" id="btnMenPreconsultas">
+                    <i class="fal fa-comments"></i>    
+                    <small>PlanDx(<label class="negrita" id="lbMenTotalDx">-</label>)</small>
+                </button>
+                
                 <button class="col-auto btn btn-sm border-white text-white" id="btnMenPacientes">
                     <i class="fal fa-edit"></i> 
                     <small>Pacientes</small>
@@ -223,7 +228,7 @@ function getView(){
                                     <a class="nav-link active negrita text-info" id="home-tab" data-toggle="tab" href="#consulta" role="tab" aria-controls="home" aria-selected="true">
                                         <i class="fal fa-edit"></i>Consulta</a>
                                 </li>
-                                <li class="nav-item hidden">
+                                <li class="nav-item">
                                     <a class="nav-link negrita text-primary" id="receta-tab" data-toggle="tab" href="#receta" role="tab" aria-controls="profile" aria-selected="false">
                                         <i class="fal fa-print"></i>Receta</a>
                                 </li>
@@ -238,9 +243,47 @@ function getView(){
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="consulta" role="tabpanel" aria-labelledby="home-tab">
                                     ${view.formConsulta()}
+                                    <div class="row">
+                                        
+                                        
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-success btn-md hand shadow" id="btnIrReceta">
+                                                <i class="fal fa-list"></i> Continuar a la Receta
+                                            </button>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-danger btn-md hand shadow" id="btnGuardarPreconsulta">
+                                                <i class="fal fa-save"></i> Guardar Preconsulta
+                                            </button>
+                                        </div>
+                                        
+                                    </div>
                                 </div>
                            
                                 <div class="tab-pane fade" id="receta" role="tabpanel" aria-labelledby="receta-tab">
+                                    ${view.formReceta()}
+
+                                        <hr class="solid">
+
+                                        <div class="row">
+                                            <div class="col-4 text-left">
+                                                <button type="button" class="btn btn-secondary btn-xl btn-circle hand shadow" id="btnCerrarModalRecetaNueva">
+                                                    <i class="fal fa-angle-left"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn btn-especial btn-md hand shadow" id="btnGuardarReceta">
+                                                    <i class="fal fa-save"></i> Guardar Consulta/Receta
+                                                </button>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="button" class="btn btn-outline-danger btn-md hand shadow" id="btnGuardarRecetaPrint">
+                                                    <i class="fal fa-print"></i> Guardar e Imprimir
+                                                </button>
+                                            </div>
+                                        </div>
+
                                     
                                 </div>
 
@@ -529,110 +572,62 @@ function getView(){
                     <label class="negrita">(PLAN TX) Plan Tratamiento</label>
                     <textarea class="form-control" id="txtCPTX" rows="2" placeholder="Escriba el plan tratamiento..."></textarea>
                 </div>
-
-                <div class="row">
-                    <div class="col-6">
-                                           
-                    </div>
-                    <div class="col-6">
-                        <button class="btn btn-especial btn-md hand shadow" id="btnGuardarReceta">
-                            <i class="fal fa-save"></i> Guardar Consulta
-                        </button>
-                    </div>
-                </div>
-                           
+                
+           
             `
         },
         formReceta:()=>{
             return `
-            <div class="modal fade modal-with-scroll" id="modal_nueva_receta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-right modal-xl" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body p-2">
+                <div class="form-group">
+                    <label>Receta No.</label><label class="negrita text-danger" id="lbCorrelativo">0</label>
+                </div>                     
 
-                            <div class="form-group">
-                                <label>Receta No.</label><label class="negrita text-danger" id="lbCorrelativo">0</label>
-                            </div>                     
-
-                            <div class="card card-rounded shadow p-4">
-                                <label class="negrita text-especial">Agregue un Medicamento</label>                                   
-                                    
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <input type="text" class="form-control" placeholder="Medicamento..." id="txtRecetaMedicamento"> 
-                                    </div>
-                                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                        <input type="text" class="form-control" placeholder="Dosis...Frecuencia" id="txtRecetaDosis">
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Duración..." id="txtRecetaDuracion">
-                                            <button class="btn btn-success btn-md shadow hand col-6" id="btnAgregarMedicamento">Agregar(+)</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                
+                <div class="card card-rounded shadow p-4">
+                    <label class="negrita text-especial">Agregue un Medicamento</label>                                   
+                        
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <input type="text" class="form-control" placeholder="Medicamento..." id="txtRecetaMedicamento"> 
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <input type="text" class="form-control" placeholder="Dosis...Frecuencia" id="txtRecetaDosis">
+                        </div>
+                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Duración..." id="txtRecetaDuracion">
+                                <button class="btn btn-success btn-md shadow hand col-6" id="btnAgregarMedicamento">Agregar(+)</button>
                             </div>
-
-                            <div class="card shadow p-2">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead class="bg-especial text-white">
-                                            <tr>
-                                                <td>Medicamento</td>
-                                                <td>Dosis</td>
-                                                <td>Duración</td>
-                                                <td></td>
-                                            </tr>
-                                        </thead>         
-                                        <tbody id="tblReceta">
-                                        
-                                        </tbody>                       
-                                    </table>
-
-                                    <div class="row">
-                                        <div class="col-9">
-                                            <div class="form-group p-4">
-                                                <label class="negrita text-especial">Observaciones</label>
-                                                <textarea class="form-control" rows="3" placeholder="Observaciones adicionales..." id="txtRecetaObs">
-                                                </textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label class="negrita text-especial">Próxima cita</label>
-                                                <input type="date" class="form-control negrita text-danger" id="txtFechaProximaCita">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-
-                            <hr class="solid">
-
-                            <div class="row">
-                                <div class="col-4 text-left">
-                                    <button type="button" class="btn btn-secondary btn-xl btn-circle hand shadow" data-dismiss="modal">
-                                        <i class="fal fa-angle-left"></i>
-                                    </button>
-                                </div>
-                                <div class="col-4">
-                                    
-                                </div>
-                                <div class="col-4">
-                                    <button type="button" class="btn btn-outline-danger btn-md hand shadow" id="btnGuardarRecetaPrint">
-                                        <i class="fal fa-print"></i> Guardar e Imprimir
-                                    </button>
-                                </div>
-                            </div>
-                            
                         </div>
                     </div>
+                    
                 </div>
-            </div>
+
+                <div class="card shadow p-2">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="bg-especial text-white">
+                                <tr>
+                                    <td>Medicamento</td>
+                                    <td>Dosis</td>
+                                    <td>Duración</td>
+                                    <td></td>
+                                </tr>
+                            </thead>         
+                            <tbody id="tblReceta">
+                            
+                            </tbody>                       
+                        </table>
+
+                        <div class="form-group p-4">
+                            <label class="negrita text-especial">Observaciones</label>
+                            <textarea class="form-control" rows="3" placeholder="Observaciones adicionales..." id="txtRecetaObs">
+                            </textarea>
+                        </div>
+
+                    </div>
+                </div>
             `
-        },
+        }, 
         modalDatosConsulta:()=>{
             return `
             <div class="modal fade" id="modalDatosConsulta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -725,7 +720,7 @@ function getView(){
     }
 
     //root.innerHTML = view.body() + view.modalNuevaReceta() + view.modalHistorialRecetas() + view.modalDatosConsulta() + view.modalNuevoPaciente() + view.modalEditarPaciente();
-    root.innerHTML = view.body()  + view.modalHistorialRecetas() + view.modalDatosConsulta() + view.modalNuevoPaciente() + view.modalEditarPaciente() + view.formReceta();
+    root.innerHTML = view.body()  + view.modalHistorialRecetas() + view.modalDatosConsulta() + view.modalNuevoPaciente() + view.modalEditarPaciente();
     rootMenuFooter.innerHTML = view.menu();
 
 };
@@ -746,7 +741,11 @@ function addListeners(){
         funciones.animateCSS('btnMenEspera','jello');
     });
 
-    
+    document.getElementById('btnMenPreconsultas').addEventListener('click',()=>{
+        document.getElementById('tab-preconsultas').click();
+        GlobalSelectedTab = "PRECONSULTAS";
+        funciones.animateCSS('btnMenPreconsultas','jello');
+    });
     document.getElementById('btnMenPacientes').addEventListener('click',()=>{
         document.getElementById('tab-pacientes').click();
         GlobalSelectedTab = "PACIENTES";
@@ -843,12 +842,10 @@ function addListeners(){
     });
 
     //RECETA
-    /*
     document.getElementById('btnCerrarModalRecetaNueva').addEventListener('click',()=>{
         //$('#modalNuevaReceta').modal('hide')
         document.getElementById('home-tab').click();
     });
-    */
 
     let btnAgregarMedicamento = document.getElementById('btnAgregarMedicamento');
     btnAgregarMedicamento.addEventListener('click',()=>{
@@ -869,7 +866,7 @@ function addListeners(){
             btnAgregarMedicamento.disabled = false;
             btnAgregarMedicamento.innerHTML = 'Agregar(+)';
 
-            //funciones.Aviso('Medicamento agregado exitosamente!!');
+            funciones.Aviso('Medicamento agregado exitosamente!!');
             getTblTempReceta();
 
             document.getElementById('txtRecetaMedicamento').value ='';
@@ -928,46 +925,9 @@ function addListeners(){
         
         imprimeReceta = 'SI';
         
-        //$("#modal_nueva_receta").modal('hide');
-        
-
-        funciones.Confirmacion("¿Está seguro que desea Guardar esta nueva receta?")
-        .then((value)=>{
-            if(value==true){
-
-                btnGuardarRecetaPrint.disabled = true;
-                btnGuardarRecetaPrint.innerHTML = '<i class="fal fa-save fa-spin"></i>';
-
-                insert_nueva_receta(GlobalSelectedIdReceta)
-                .then(()=>{
-                    
-                        funciones.Aviso('Receta guardada exitosamente!!');
-
-                        btnGuardarRecetaPrint.disabled = false;
-                        btnGuardarRecetaPrint.innerHTML = '<i class="fal fa-print"></i> Guardar e Imprimir'
-
-                        $("#modal_nueva_receta").modal('hide');
-                    
-                        db_deleteTempRecetaAll();
-
-                        try {
-                            receta_imprimir(GlobalCodSucursal,GlobalSelectedIdReceta,'DESKTOP');        
-                        } catch (error) {
-                            
-                        };
-                                        
-                })
-                .catch(()=>{
-                   
-                    btnGuardarRecetaPrint.disabled = false;
-                    btnGuardarRecetaPrint.innerHTML = '<i class="fal fa-print"></i> Guardar e Imprimir'
-                   
-                    funciones.AvisoError('No se puede guardar');
-
-                })
-
-            }
-        })
+       
+        btnGuardarReceta.click();
+  
     });
 
 
@@ -980,9 +940,12 @@ function addListeners(){
         
                 btnGuardarReceta.disabled = true;
                 btnGuardarReceta.innerHTML = '<i class="fal fa-save fa-spin"></i>';
+
+                btnGuardarRecetaPrint.disabled = true;
+                btnGuardarRecetaPrint.innerHTML = '<i class="fal fa-save fa-spin"></i>';
         
 
-                let obs = '';
+                let obs = funciones.limpiarTexto(document.getElementById('txtRecetaObs').value) || 'SN';
 
                 let peso = document.getElementById('txtCPeso').value || '0';
                 let talla = document.getElementById('txtCTalla').value || '0';
@@ -995,15 +958,21 @@ function addListeners(){
                 let txtCIC = document.getElementById('txtCIC').value || 'SN';
                 let txtCPTX = document.getElementById('txtCPTX').value || 'SN';
 
+                db_selectTempReceta()
+                .then((response)=>{
                 
-                    insert_receta(GlobalSelectedCodPaciente,funciones.limpiarTexto(obs),GlobalCorrelativo,peso,talla,motivo,diagnostico,txtCHEA, txtCAntecedentes, txtCEF, txtCIC, txtCPTX,'')
+                    let rec = JSON.stringify(response);
+                   
+                    insert_receta(GlobalSelectedCodPaciente,funciones.limpiarTexto(obs),GlobalCorrelativo,peso,talla,motivo,diagnostico,txtCHEA, txtCAntecedentes, txtCEF, txtCIC, txtCPTX,rec)
                     .then(async(data)=>{
                         
-                        funciones.Aviso('Consulta Guardad exitosamente!!');
+                        funciones.Aviso('Receta Guardad exitosamente!!');
     
                         btnGuardarReceta.disabled = false;
-                        btnGuardarReceta.innerHTML = '<i class="fal fa-save"></i> Guardar Consulta';
+                        btnGuardarReceta.innerHTML = '<i class="fal fa-save"></i> Guardar Consulta/Receta';
                         
+                        btnGuardarRecetaPrint.disabled = false;
+                        btnGuardarRecetaPrint.innerHTML = '<i class="fal fa-print"></i> Guardar e Imprimir'
                         
                         
                         //$("#modalNuevaReceta").modal('hide');
@@ -1025,7 +994,20 @@ function addListeners(){
                                 document.getElementById('btnMenReportes').click();
                                 break;
                         }
-                                            
+                      
+                    
+                        if(imprimeReceta=='SI'){
+                            try {
+                                console.log('datos de regreso, id: ')
+                                console.log(data.insertId);
+                                let id = Number(data.insertId)
+            
+                                receta_imprimir(GlobalCodSucursal,id,'DESKTOP');    
+                            } catch (error) {
+                                
+                            }
+                        }
+                        
     
                         getCorrelativoCoddoc();
                         imprimeReceta ='NO';
@@ -1033,29 +1015,21 @@ function addListeners(){
                         db_deleteTempRecetaAll();
     
                         GlobalSelectedIdPreconsulta = 0;
-
-                        funciones.Confirmacion('¿Desea agregar una receta a esta consulta?')
-                        .then((value)=>{
-                            if(value==true){
-
-                                let id = Number(data.insertId)
-                                GlobalSelectedIdReceta = id;
-                                agregar_nueva_receta_consulta(id);
-
-                            }
-                        })
     
                     })
                     .catch(()=>{
                         btnGuardarReceta.disabled = false;
-                        btnGuardarReceta.innerHTML = '<i class="fal fa-save"></i> Guardar Consulta';
+                        btnGuardarReceta.innerHTML = '<i class="fal fa-save"></i> Guardar Consulta/Receta';
                         
+                        btnGuardarRecetaPrint.disabled = false;
+                        btnGuardarRecetaPrint.innerHTML = '<i class="fal fa-print"></i> Guardar e Imprimir'
                         
                         funciones.AvisoError('No se pudo guardar la receta');
 
                     })
 
             
+                })
 
             
                
@@ -1063,6 +1037,9 @@ function addListeners(){
         })
     });
 
+
+
+    document.getElementById('btnIrReceta').addEventListener('click',()=>{document.getElementById('receta-tab').click()})
 
     getCorrelativoCoddoc();
 
@@ -1074,8 +1051,69 @@ function addListeners(){
     funciones.slideAnimationTabs();
 
   
-  
-    document.getElementById('txtFechaProximaCita').value = funciones.getFecha();
+    //preconsultas
+    getTblPreconsultas();
+
+    let btnGuardarPreconsulta = document.getElementById('btnGuardarPreconsulta');
+    btnGuardarPreconsulta.addEventListener('click',()=>{
+
+        funciones.hablar('Está a punto de guardar los datos de consulta, sin guardar receta y generar un pre consulta, ¿Desea continuar?')
+        funciones.Confirmacion('¿Está seguro que desea Guardar esta Pre-Consulta?')
+        .then((value)=>{
+            if(value==true){
+        
+                btnGuardarPreconsulta.disabled = true;
+                btnGuardarPreconsulta.innerHTML = '<i class="fal fa-save fa-spin"></i>';
+
+
+                let peso = document.getElementById('txtCPeso').value || '0';
+                let talla = document.getElementById('txtCTalla').value || '0';
+                let motivo = funciones.limpiarTexto(document.getElementById('txtCMotivo').value) || 'SN';
+                let diagnostico = funciones.limpiarTexto(document.getElementById('txtCDiagnostico').value) || 'SN'
+
+                let txtCHEA = document.getElementById('txtCHEA').value || 'SN';
+                let txtCAntecedentes = document.getElementById('txtCAntecedentes').value || 'SN';
+                let txtCEF = document.getElementById('txtCEF').value || 'SN';
+                let txtCIC = document.getElementById('txtCIC').value || 'SN';
+                let txtCPTX = document.getElementById('txtCPTX').value || 'SN';
+
+                insert_preconsulta(GlobalSelectedCodPaciente,peso,talla,motivo,diagnostico,txtCHEA, txtCAntecedentes, txtCEF, txtCIC, txtCPTX)
+                .then(async()=>{
+                    funciones.Aviso('Pre-Consulta Guardada exitosamente!!');
+
+                    btnGuardarPreconsulta.disabled = false;
+                    btnGuardarPreconsulta.innerHTML = '<i class="fal fa-save"></i> Guardar Preconsulta';
+
+                    //$("#modalNuevaReceta").modal('hide');
+
+                    if(Number(GlobalSelectedIdTurno)==0){
+                        document.getElementById('tab-preconsultas').click();
+                    }else{
+                        delete_turno(GlobalSelectedIdTurno);
+                        document.getElementById('tab-turnos').click();
+                    };
+                    
+                    //regresa a la tab inicial en la consulta
+                    document.getElementById('home-tab').click();
+
+                    socket.emit('preconsulta nueva', GlobalCodSucursal)
+                    GlobalSelectedIdPreconsulta = 0;
+
+                    getTblPreconsultas();
+
+                })
+                .catch(()=>{
+                    btnGuardarPreconsulta.disabled = false;
+                    btnGuardarPreconsulta.innerHTML = '<i class="fal fa-save"></i> Guardar Preconsulta';
+                    funciones.AvisoError('No se pudo guardar la pre-consulta')
+                })
+               
+            }
+        })
+
+
+    });
+
     // Reportes
     document.getElementById('txtFechaInicio').value = funciones.getFecha();
     document.getElementById('txtFechaFinal').value = funciones.getFecha();
@@ -1143,7 +1181,6 @@ function keyboard_listeners(){
     //Mousetrap.bind('enter', function(e) {  
     //});
 
-    //form receta
     document.getElementById('txtRecetaMedicamento').addEventListener('keyup',(e)=>{
         if (e.keyCode === 13) {
            document.getElementById('txtRecetaDosis').focus();
@@ -1172,85 +1209,6 @@ function keyboard_listeners(){
     });
 
 
-
-
-
-    //form consulta
-    document.getElementById('txtCPeso').addEventListener('keyup',(e)=>{
-        if (e.keyCode === 13) {
-            document.getElementById('txtCTalla').focus();
-         };
-         if (e.key === 'Enter') {
-             document.getElementById('txtCTalla').focus();
-         };
-    });
-    document.getElementById('txtCTalla').addEventListener('keyup',(e)=>{
-    if (e.keyCode === 13) {
-            document.getElementById('txtCMotivo').focus();
-         };
-         if (e.key === 'Enter') {
-             document.getElementById('txtCMotivo').focus();
-         };
-    });
-    document.getElementById('txtCMotivo').addEventListener('keyup',(e)=>{
-        if (e.keyCode === 13) {
-            document.getElementById('txtCHEA').focus();
-         };
-         if (e.key === 'Enter') {
-             document.getElementById('txtCHEA').focus();
-         };
-    });
-    document.getElementById('txtCHEA').addEventListener('keyup',(e)=>{
-        if (e.keyCode === 13) {
-            document.getElementById('txtCAntecedentes').focus();
-         };
-         if (e.key === 'Enter') {
-             document.getElementById('txtCAntecedentes').focus();
-         };
-    });
-    document.getElementById('txtCAntecedentes').addEventListener('keyup',(e)=>{
-        if (e.keyCode === 13) {
-            document.getElementById('txtCEF').focus();
-         };
-         if (e.key === 'Enter') {
-             document.getElementById('txtCEF').focus();
-         };
-    });
-    document.getElementById('txtCEF').addEventListener('keyup',(e)=>{
-        if (e.keyCode === 13) {
-            document.getElementById('txtCDiagnostico').focus();
-         };
-         if (e.key === 'Enter') {
-             document.getElementById('txtCDiagnostico').focus();
-         };
-    });
-    document.getElementById('txtCDiagnostico').addEventListener('keyup',(e)=>{
-        if (e.keyCode === 13) {
-            document.getElementById('txtCIC').focus();
-         };
-         if (e.key === 'Enter') {
-             document.getElementById('txtCIC').focus();
-         };
-    });
-    document.getElementById('txtCIC').addEventListener('keyup',(e)=>{
-        if (e.keyCode === 13) {
-            document.getElementById('txtCPTX').focus();
-         };
-         if (e.key === 'Enter') {
-             document.getElementById('txtCPTX').focus();
-         };
-    });
-    document.getElementById('txtCPTX').addEventListener('keyup',(e)=>{
-        if (e.keyCode === 13) {
-            document.getElementById('btnGuardarReceta').focus();
-         };
-         if (e.key === 'Enter') {
-             document.getElementById('btnGuardarReceta').focus();
-         };
-    });
-
-
-
 };
 
 
@@ -1271,7 +1229,7 @@ function initView(){
     addListeners();
     //getTblPacientes();
     getTblTurnos();
-    //getTblPreconsultas();
+    getTblPreconsultas();
     
 };
 
@@ -1383,56 +1341,15 @@ async function getNuevaReceta(idcliente,nombre,idturno, edad,seguro){
 
 };
 
-function agregar_nueva_receta_consulta(idconsulta){
+function getHistorialConsultas(){
 
-    GlobalSelectedIdReceta = Number(idconsulta);
-
-    $("#modal_nueva_receta").modal('show');
-    
-    
-    getTblTempReceta();
-
-};
-
-function insert_nueva_receta(id){
-
-    return new Promise((resolve,reject)=>{
-        db_selectTempReceta()
-        .then((response)=>{
-                
-            let receta = JSON.stringify(response);
-            let proximacita = funciones.devuelveFecha('txtFechaProximaCita');
-            let obs = funciones.limpiarTexto(document.getElementById('txtRecetaObs').value) || '';
-
-            axios.post('/update_receta_consulta',{
-                sucursal:GlobalCodSucursal,
-                id:id,
-                receta:receta,
-                proximacita:proximacita,
-                obs:obs
-            })
-            .then((response) => {   
-                let data = response.data; 
-               
-                if(Number(data.affectedRows)==0){
-                    reject();
-                }else{
-                    resolve(data);
-                }
-            }, (error) => {
-                reject(error);
-            });
-        })
-        .catch(()=>{
-            reject();
-        })
-    })
 
 };
 
 function getDataPaciente(id,nombre,direccion,coddepto,fechanacimiento,telefono){
 
-   
+    console.log('revisar..');
+    console.log(fechanacimiento);
 
     GlobalSelectedCodPaciente = Number(id);
     document.getElementById('txtEditNomclie').value = nombre;
@@ -1573,7 +1490,7 @@ function delete_TempReceta(id){
             btn.disabled = true;
             btn.innerHTML = `<i class="fal fa-trash fa-spin"></i>`;
             
-          
+            console.log('id del item ' + id.toString())
                 db_deleteTempReceta(id)
                 .then(()=>{
                     getTblTempReceta();
@@ -1634,6 +1551,35 @@ function getDataTempReceta(){
     
 };
 
+function BACKUP_getTblTempReceta(){
+    let container = document.getElementById('tblReceta');
+    container.innerHTML = GlobalLoader;
+    
+    let str = '';
+
+    getDataTempReceta()
+    .then((data) => {
+        data.map((r)=>{
+            str += `
+                <tr>
+                    <td>${r.MEDICAMENTO}</td>
+                    <td>${r.DOSIS}</td>
+                    <td>${r.DURACION}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger btn-circle hand shadow" onclick="delete_TempReceta('${r.ID}')" id="${'rtemp' + r.ID.toString()}">
+                            <i class="fal fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `
+        })
+        container.innerHTML =str;
+    })
+    .catch(() => {
+        container.innerHTML = 'No se pudieron cargar los datos...'
+    })
+
+};
 
 function getTblTempReceta(){
     let container = document.getElementById('tblReceta');
@@ -1744,87 +1690,14 @@ function getTblHistorial(idcliente,nomclie,telefono){
     getDataHistorialReceta(idcliente)
     .then(async(data)=> {  
         data.map((r)=> {
-            let strClass = ''; let strReceta = '';
-            let receta = r.RECETA;
-            if(receta==''){strClass='';strReceta='hidden'}else{strClass='hidden';strReceta=''};
+            receta = '';
             str += `
-            <div class="card card-rounded shadow p-2 border-especial">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-5">
-                            <div class="form-group">
-                                <i class="fal fa-folder"></i> <label class="">Fecha:</label>
-                                <b>${funciones.convertDate(r.FECHA)}</b>
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <div class="form-group">
-                                <small class="negrita">Hora:${r.HORA}</small>
-                            </div>
-                        </div>
-                        
-                        <div class="col-2 text-right"> 
-                            <button class="btn btn-danger btn-circle btn-md hand shadow" onclick="receta_eliminar('${r.IDRECETA}')" id="${'r' + r.IDRECETA.toString()}">
-                                <i class="fal fa-trash"></i>
-                            </button>
-                        </div> 
-
-                    </div>
-                    <div class="row">
-                            <div class="col-6">
-                                    <button class="col-12 btn btn-secondary btn-sm hand shadow" onclick="receta_consulta('${funciones.convertDate(r.FECHA)}','${r.PESO}','${r.TALLA}','${r.MOTIVO.replace(/(\r\n|\n|\r)/gm, "*-")}','${r.DIAGNOSTICO.replace(/(\r\n|\n|\r)/gm, "*-")}','${funciones.quitarEnter(r.HISTORIAENF)}','${funciones.quitarEnter(r.ANTECEDENTES)}','${funciones.quitarEnter(r.EXAMENFISICO)}','${funciones.quitarEnter(r.IMPRESIONCLINICA)}','${funciones.quitarEnter(r.PLANTX)}')">
-                                        <i class="fal fa-edit"></i> Consulta
-                                    </button>
-                            </div>
-                            <div class="col-6">
-                                    <button class="col-12 btn btn-especial btn-sm hand shadow ${strClass}" onclick="agregar_nueva_receta_consulta('${r.ID}')" data-dismiss="modal">
-                                        <i class="fal fa-plus"></i> Recetar
-                                    </button>
-                            </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-6">    
-                            <button class="col-12 btn btn-success btn-sm hand shadow ${strReceta}" onclick="receta_whatsapp('${nomclie}','${telefono}',${r.ID})">
-                                <i class="fal fa-paper-plane"></i> Enviar Whatsapp
-                            </button>
-                        </div>        
-                        <div class="col-6">    
-                            <button class="col-12 btn btn-info btn-sm hand shadow ${strReceta}" onclick="receta_imprimir('${r.TOKEN}','${r.ID}','DESKTOP')">
-                                <i class="fal fa-print"></i> Imprimir
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr class="solid">  
-                   `
-        })
-        container.innerHTML = str;
-        try {
-            grafica_peso(data);
-            grafica_talla(data);
-        } catch (error) {
-            
-        }
-       
-    })
-    .catch(()=> {
-        container.innerHTML = 'No se pudieron cargar los datos...';
-    })
-
-    document.getElementById('lbPacienteHistorial').innerText = nomclie;
-    $('#modalHistorialRecetas').modal('show');
-
-
-    /*
-    str += `
                 <div class="card card-rounded shadow hand p-2 bg-carpeta">
                     
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                            <i class="fal fa-folder"></i> <label class="">Fecha:</label>
+                                <label class="">Fecha:</label>
                                 <b>${funciones.convertDate(r.FECHA)}</b>
                             </div>
                         </div>
@@ -1847,27 +1720,21 @@ function getTblHistorial(idcliente,nomclie,telefono){
                     <br>
                     <div class="row">
 
-                        <div class="col-3">  
+                        <div class="col-4">  
                             <button class="btn btn-secondary btn-sm hand shadow" onclick="receta_consulta('${funciones.convertDate(r.FECHA)}','${r.PESO}','${r.TALLA}','${r.MOTIVO.replace(/(\r\n|\n|\r)/gm, "*-")}','${r.DIAGNOSTICO.replace(/(\r\n|\n|\r)/gm, "*-")}','${funciones.quitarEnter(r.HISTORIAENF)}','${funciones.quitarEnter(r.ANTECEDENTES)}','${funciones.quitarEnter(r.EXAMENFISICO)}','${funciones.quitarEnter(r.IMPRESIONCLINICA)}','${funciones.quitarEnter(r.PLANTX)}')">
                                 <i class="fal fa-edit"></i>Consulta
                             </button>
                         </div>
-                        <div class="col-3"> 
-                            <button class="btn btn-success btn-sm hand shadow ${strReceta}" onclick="receta_whatsapp('${nomclie}','${telefono}',${r.ID})">
+                        <div class="col-4"> 
+                            <button class="btn btn-success btn-sm hand shadow" onclick="receta_whatsapp('${nomclie}','${telefono}',${r.ID})">
                                 <i class="fal fa-paper-plane"></i>Whatsapp
                             </button>
                         </div>
-                        <div class="col-3"> 
-                            <button class="btn btn-info btn-sm hand shadow ${strReceta}" onclick="receta_imprimir('${r.TOKEN}','${r.ID}','DESKTOP')">
+                        <div class="col-4"> 
+                            <button class="btn btn-info btn-sm hand shadow" onclick="receta_imprimir('${r.TOKEN}','${r.ID}','DESKTOP')">
                                 <i class="fal fa-print"></i>Imprimir
                             </button>
                         </div>
-                        <div class="col-3"> 
-                            <button class="btn btn-especial btn-sm hand shadow ${strClass}" onclick="agregar_nueva_receta_consulta('${r.ID}')" data-dismiss="modal">
-                                <i class="fal fa-plus"></i>Recetar
-                            </button>
-                        </div>
-
                        
 
                     </div>
@@ -1875,7 +1742,22 @@ function getTblHistorial(idcliente,nomclie,telefono){
                 </div>
                 <hr class="solid">  
                    `
-    */
+        })
+        container.innerHTML = str;
+        try {
+            grafica_peso(data);
+            grafica_talla(data);
+        } catch (error) {
+            
+        }
+       
+    })
+    .catch(()=> {
+        container.innerHTML = 'No se pudieron cargar los datos...';
+    })
+
+    document.getElementById('lbPacienteHistorial').innerText = nomclie;
+    $('#modalHistorialRecetas').modal('show');
 
 };
 
@@ -2029,13 +1911,61 @@ function receta_whatsapp(nomclie,telefono,receta){
 
     $('#modalHistorialRecetas').modal('hide');
     
-  
+    console.log('aca...')
+
+    console.log(receta);
 
     funciones.enviarRecetaWhatsapp2(nomclie,telefono,receta);
 
 };
 
+function BACKUP_receta_whatsapp(sucursal,idreceta,telefono,receta){
 
+    $('#modalHistorialRecetas').modal('hide');
+    
+    console.log('aca...')
+
+    console.log(receta);
+
+    funciones.enviarRecetaWhatsapp2(sucursal,idreceta,telefono,receta);
+
+};
+
+
+function BACKUP_receta_imprimir(sucursal,idreceta){
+  
+    $('#modalHistorialRecetas').modal('hide');
+
+   
+    rootImpresion.innerHTML = ''; //
+    let str = '';
+    let fecha = ''; let paciente = ''; let obs = '';
+
+    get_data_receta(sucursal,idreceta)
+    .then((data)=>{
+        //console.log(data);
+        data.map((r)=>{
+            fecha = funciones.convertDate(r.FECHA);
+            paciente = r.NOMCLIE;
+            obs = r.OBS;
+            str += `
+                <li class="negrita"> ${r.MEDICAMENTO} - ${r.DOSIS} - ${r.DURACION}</li>
+            `
+        })
+
+        rootImpresion.innerHTML = getFormatoReceta(GlobalCodSucursal,fecha,paciente,str,obs);
+            
+            setTimeout(()=>{window.print();},2000)
+
+            setTimeout(()=>{rootImpresion.innerHTML = '';console.log('timer...');},9000)
+             
+    })
+    .catch(()=>{
+        funciones.AvisoError('No se pudo generar la impresión');
+    })
+
+     
+};
 
 function receta_eliminar(id){
 
@@ -2138,7 +2068,7 @@ function grafica_peso(data){
                     click: function(context) {
                       // Receives `click` events only for labels of the first dataset.
                       // The clicked label index is available in `context.dataIndex`.
-                      //console.log(context);
+                      console.log(context);
                     }
                   },
                   formatter: function(value) {
@@ -2182,6 +2112,7 @@ function grafica_talla(data){
             bgColor.push('blue')
     })
 
+    console.log(valor);
 
     var ctx = document.getElementById('containerGraficaTalla').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -2341,7 +2272,7 @@ function getTblTurnos(){
         lbMenTotalEspera.innerText = conteo;
     })
     .catch((error)=>{
-       
+        console.log(error);
         container.innerHTML = 'No se pudieron cargar los datos...';
         lbTotalTurnos.innerText = conteo;
         lbMenTotalEspera.innerText = conteo;
@@ -2358,7 +2289,7 @@ function delete_turno(idturno){
         id:idturno
         })
     .then(async(response) => {          
-        
+        console.log('turno eliminado ' +  idturno.toString())
         GlobalSelectedIdTurno = 0;
         socket.emit('turno finalizado doctor', GlobalCodSucursal, idturno)
         await getTblTurnos();             
@@ -2372,7 +2303,191 @@ function delete_turno(idturno){
 //********************* */
 
 //***** PRECONSULTAS ******/
+function getDataPreconsultas(){
+    return new Promise((resolve, reject) => {
 
+        axios.post('/select_lista_preconsultas',{
+            sucursal:GlobalCodSucursal
+        })
+        .then((response) => {   
+            let data = response.data; 
+            resolve(data);
+        }, (error) => {
+            reject(error);
+        });
+    })
+    
+};
+
+function getTblPreconsultas(){
+    
+
+    let container = document.getElementById('tblPreconsultas');
+    container.innerHTML = GlobalLoader;
+   
+    let lbMenTotalDx = document.getElementById('lbMenTotalDx');
+    lbMenTotalDx.innerText = "-";
+
+    let str = '';
+    let conteo = 0;
+
+    getDataPreconsultas()
+    .then((data)=>{
+        data.map((r)=>{
+            conteo += 1;
+            str += `
+                <div class="card card-rounded shadow hand">
+                    <div class="card-body p-2">
+                        
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Paciente:</td>
+                                    <td class="negrita">${r.NOMCLIE}</td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha:</td>
+                                    <td class="negrita">${funciones.convertDate(r.FECHA)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <small class="negrita text-danger">Peso: ${r.PESO}</small>
+                            </div>
+                            <div class="col-6">
+                                <small class="negrita text-danger">Talla: ${r.TALLA}</small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <button class="btn btn-circle btn-lg btn-info shadow" 
+                                onclick="getDatosPreconsulta(${r.CODCLIENTE},'${r.NOMCLIE}',${r.ID},'${funciones.getEdad(r.FECHANACIMIENTO)}', '${r.PESO}', '${r.TALLA}', '${r.MOTIVO}','${r.DIAGNOSTICO}','${r.HISTORIAENF}','${r.ANTECEDENTES}','${r.EXAMENFISICO}','${r.IMPRESIONCLINICA}','${r.PLANTX}','${r.SEGURO}')">
+                                    <i class="fal fa-notes-medical"></i>
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-circle btn-lg btn-danger shadow" onclick="eliminar_preconsulta(${r.ID})">
+                                    <i class="fal fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> 
+                <hr class="solid">
+            `
+        })
+        container.innerHTML = str;
+        lbMenTotalDx.innerText = conteo;
+    })
+    .catch((error)=>{
+        console.log(error);
+        container.innerHTML = 'No se pudieron cargar los datos...';
+        lbMenTotalDx.innerText = conteo;
+    })
+    
+
+    /**
+     * 
+       str += `
+                <tr class="border-secondary border-bottom border-left-0 border-right-0 border-top-0">
+                    <td>${funciones.convertDate(r.FECHA)}</td>
+
+                    <td>${r.NOMCLIE}
+
+                        <div class="row">
+                            <div class="col-6">
+                                <small class="negrita text-danger">Peso: ${r.PESO}</small>
+                            </div>
+                            <div class="col-6">
+                                <small class="negrita text-danger">Talla: ${r.TALLA}</small>
+                            </div>
+                           
+                        </div>
+                      
+                    </td>
+
+                    <td>
+                        <button class="btn btn-circle btn-lg btn-info shadow" 
+                        onclick="getDatosPreconsulta(${r.CODCLIENTE},'${r.NOMCLIE}',${r.ID},'${funciones.getEdad(r.FECHANACIMIENTO)}', '${r.PESO}', '${r.TALLA}', '${r.MOTIVO}','${r.DIAGNOSTICO}','${r.HISTORIAENF}','${r.ANTECEDENTES}','${r.EXAMENFISICO}','${r.IMPRESIONCLINICA}','${r.PLANTX}','${r.SEGURO}')">
+                            <i class="fal fa-notes-medical"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-circle btn-lg btn-danger shadow" onclick="eliminar_preconsulta(${r.ID})">
+                            <i class="fal fa-trash"></i>
+                        </button>
+                    </td>
+
+                </tr>
+            `
+     * 
+     */
+    
+};
+
+function insert_preconsulta(idcliente,peso,talla,motivo,diagnostico,historia,antecedentes,examenf,impclinica,plantx){
+    return new Promise((resolve,reject)=>{
+        axios.post('/insert_preconsulta',{
+            sucursal:GlobalCodSucursal,
+            idcliente:idcliente,
+            fecha:funciones.getFecha(),
+            hora:funciones.getHora(),
+            peso:peso,
+            talla:talla,
+            motivo:motivo,
+            diagnostico: diagnostico,
+            historia:historia,
+            antecedentes:antecedentes,
+            examenf:examenf,
+            impclinica:impclinica,
+            plantx:plantx,
+            idmorbilidad:0,
+            seguro:GlobalSelectedConsultaSeguro
+        })
+        .then((response) => {          
+            resolve();             
+        }, (error) => {
+            reject();
+        });
+    });
+};
+
+function eliminar_preconsulta(id){
+    funciones.Confirmacion('¿Está seguro que desea ELIMINAR esta Pre-Consulta?')
+    .then((value)=>{
+        if(value==true){
+            delete_preconsulta(id)
+            .then(()=>{
+                funciones.Aviso('Pre-consulta eliminada exitosamente!!');
+            })
+            .catch(()=>{
+                funciones.AvisoError('No se pudo eliminar esta Pre-Consulta');
+            })
+        }
+
+    })
+};
+
+function delete_preconsulta(id){
+
+    axios.post('/delete_preconsulta',{
+        sucursal:GlobalCodSucursal,
+        id:id
+        })
+    .then(async(response) => {          
+       
+        GlobalSelectedIdPreconsulta = 0;
+        
+        await getTblPreconsultas();             
+    }, (error) => {
+        console.log('turno no eliminado');
+    });
+
+};
 
 function getDatosPreconsulta(idcliente,nombre,idpreconsulta, edad, peso, talla, motivo,diagnostico,historia,antecedentes,examenf,impclinica,plantx,seguro){
 
