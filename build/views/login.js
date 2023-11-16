@@ -30,7 +30,7 @@ function getView(){
                             <div class="col-6">
                                 <small class="negrita">por Alexis Burgos</small>
                                 <br>
-                                <small class="negrita">modif:14.11.2023</small>
+                                <small class="negrita">modif:16.11.2023</small>
                             </div>
                             <div class="col-6 text-right">
                                 <button class="btn btn-especial shadow btn-xl btn-circle" id="btnIniciar">

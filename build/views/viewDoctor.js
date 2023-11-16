@@ -885,42 +885,9 @@ function addListeners(){
         })
 
     });
-    /*
-    let btnAgregarMedicamento = document.getElementById('btnAgregarMedicamento');
-    btnAgregarMedicamento.addEventListener('click',()=>{
-        let medicamento = document.getElementById('txtRecetaMedicamento').value || 'SN';
-        let dosis = document.getElementById('txtRecetaDosis').value || 'SN';
-        let duracion = document.getElementById('txtRecetaDuracion').value || 'SN';
+   
+   
 
-        if(medicamento == 'SN'){funciones.AvisoError('Escriba el nombre del medicamento');return;}
-        if(dosis == 'SN'){funciones.AvisoError('Escriba la dosis');return;}
-        if(duracion == 'SN'){funciones.AvisoError('Escriba la duración del tratamiento');return;}
-
-        btnAgregarMedicamento.disabled = true;
-        btnAgregarMedicamento.innerHTML = '<i class="fal fa-save fa-spin"></i>';
-
-        insert_temp_receta(funciones.limpiarTexto(medicamento),dosis,duracion)
-        .then(()=>{
-            btnAgregarMedicamento.disabled = false;
-            btnAgregarMedicamento.innerHTML = 'Agregar(+)';
-
-            funciones.Aviso('Medicamento agregado exitosamente!!');
-            getTblTempReceta();
-
-            document.getElementById('txtRecetaMedicamento').value ='';
-            document.getElementById('txtRecetaDosis').value ='';
-            document.getElementById('txtRecetaDuracion').value ='';
-
-            document.getElementById('txtRecetaMedicamento').focus();
-        })
-        .catch(()=>{
-            funciones.AvisoError('No se pudo agregar el medicamento')
-            btnAgregarMedicamento.disabled = false;
-            btnAgregarMedicamento.innerHTML = 'Agregar(+)';
-        })
-
-    });
-*/
     let imprimeReceta = 'NO';
     let btnGuardarReceta = document.getElementById('btnGuardarReceta');
     let btnGuardarRecetaPrint = document.getElementById('btnGuardarRecetaPrint');
@@ -928,7 +895,6 @@ function addListeners(){
         
         imprimeReceta = 'SI';
         
-        //$("#modal_nueva_receta").modal('hide');
         
 
         funciones.Confirmacion("¿Está seguro que desea Guardar esta nueva receta?")
@@ -1013,6 +979,12 @@ function addListeners(){
     
                         switch (GlobalSelectedTab) {
                             case 'ESPERA':
+
+                                if(Number(GlobalSelectedIdTurno)==0){
+                                }else{
+                                    delete_turno(GlobalSelectedIdTurno);
+                                };
+                                
                                 document.getElementById('btnMenEspera').click();
                                 break;
                             case 'PRECONSULTA':
