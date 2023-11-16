@@ -984,7 +984,7 @@ function addListeners(){
                                 }else{
                                     delete_turno(GlobalSelectedIdTurno);
                                 };
-                                
+
                                 document.getElementById('btnMenEspera').click();
                                 break;
                             case 'PRECONSULTA':
@@ -1562,33 +1562,6 @@ function delete_TempReceta(id){
     
 };
 
-function BACKUP_delete_TempReceta(id){
-    funciones.Confirmacion("¿Está seguro que desea quitar este medicamento de la lista?")
-    .then((value)=>{
-        if(value==true){
-            let btn = document.getElementById('rtemp' + id.toString())
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fal fa-trash fa-spin"></i>`;
-            
-                axios.post('/delete_temp_receta',{
-                    sucursal:GlobalCodSucursal,
-                    id:id
-                })
-                .then((response) => {   
-                    let data = response.data; 
-                    getTblTempReceta();
-                }, (error) => {
-                    funciones.AvisoError('No se pudo eliminar este item')
-                    btn.disabled = false;
-                    btn.innerHTML = `<i class="fal fa-trash"></i>`;
-                
-                });
-
-        }
-    })
-    
-    
-};
 
 function getDataTempReceta(){
     return new Promise((resolve, reject) => {
@@ -2266,6 +2239,7 @@ function getTblTurnos(){
     .then((data)=>{
         data.map((r)=>{
             conteo += 1;
+            let rowid = r.ID.toString() + 'row';
             str += `
                 <tr class="border-secondary border-bottom border-left-0 border-right-0 border-top-0">
                     <td>(T:${conteo}) - ${r.NOMCLIE}
@@ -2300,9 +2274,13 @@ function getTblTurnos(){
                             
                         </div>
                     </td>
-                    <td>${r.SEGURO}
+                    <td class="text-right">${r.SEGURO}
                         <br>
                         <small class="negrita text-info">Código: ${r.CODIGO_SEGURO}</small>
+                        <br>
+                        <button class="btn btn-danger btn-circle btn-sm hand shadow" onclick="eliminar_turno('${rowid}','${r.ID}')" id='${rowid}'>
+                            <i class="fal fa-trash"></i>
+                        </button>
                     </td>
                    
                 </tr>
@@ -2324,7 +2302,53 @@ function getTblTurnos(){
 };
 
 
+function eliminar_turno(idturno, id){
+    funciones.Confirmacion('¿Está seguro que desea ELIMINAR este turno?')
+    .then((value)=>{
+        if(value==true){
+
+            document.getElementById(idturno).disabled = true;
+            document.getElementById(idturno).innerHTML = '<i class="fal fa-trash fa-spin"></i>'
+
+            delete_turno_secre(id)
+            .then(async()=>{
+                funciones.Aviso('Turno eliminado exitosamente!!');
+               
+                await getTblTurnos();
+                socket.emit('turno finalizado', GlobalCodSucursal, idturno);
+            })
+            .catch(()=>{
+                funciones.AvisoError('No se pudo eliminar este turno');
+                document.getElementById(idturno).disabled = false;
+                document.getElementById(idturno).innerHTML = '<i class="fal fa-trash"></i>'
+            })
+
+        }
+    })
+}
+
+function delete_turno_secre(idturno){
+    return new Promise((resolve, reject) => {
+
+        axios.post('/delete_temp_espera',{
+            sucursal:GlobalCodSucursal,
+            id:idturno
+            })
+        .then(async(response) => {          
+            GlobalSelectedIdTurno = 0;
+            resolve();    
+        }, (error) => {
+            console.log('turno no eliminado');
+            reject();
+        });
+
+    })
+    
+
+}
+
 function delete_turno(idturno){
+
     axios.post('/delete_temp_espera',{
         sucursal:GlobalCodSucursal,
         id:idturno

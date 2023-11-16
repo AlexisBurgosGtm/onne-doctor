@@ -44,7 +44,7 @@ socket.on('turno finalizado', function(token,id){
 
     if(GlobalTipoUsuario=='SECRETARIA'){
         try {
-            //getTblTurnos();
+            getTblTurnos();
         } catch (error) {
             
         }
